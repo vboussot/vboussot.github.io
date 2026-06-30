@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Declare supported themes early so the browser themes native UI (scrollbars,
+       form controls, canvas) and minimizes flashes during initial load. -->
+  <meta name="color-scheme" content="light dark">
+  <!-- Match the browser chrome to each theme's page background. -->
+  <meta name="theme-color" content="#f6f4ef" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#15161b" media="(prefers-color-scheme: dark)">
+  <meta name="robots" content="index, follow">
+
+  <title>Valentin Boussot · Medical Image Analysis Researcher</title>
+  <meta name="description" content="Valentin Boussot · researcher and software engineer in medical image analysis: multimodal registration, domain adaptation, and anatomical-representation learning. Builds the IMPACT ecosystem and the KonfAI framework.">
+  <meta name="author" content="Valentin Boussot">
+  <link rel="canonical" href="https://vboussot.github.io/">
+
+  <!-- Open Graph / social -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Valentin Boussot">
+  <meta property="og:title" content="Valentin Boussot · Medical Image Analysis Researcher">
+  <meta property="og:description" content="Multimodal registration, domain adaptation, and anatomical-representation learning. Builds the IMPACT ecosystem and KonfAI.">
+  <meta property="og:url" content="https://vboussot.github.io/">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://vboussot.github.io/assets/img/og-cover.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Valentin Boussot · medical image analysis: multimodal registration, domain adaptation, and anatomical-representation learning. Builds the IMPACT ecosystem and the KonfAI framework.">
+
+  <!-- Twitter / X card (no verified account handle, so none is claimed). -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Valentin Boussot · Medical Image Analysis Researcher">
+  <meta name="twitter:description" content="Multimodal registration, domain adaptation, and anatomical-representation learning. Builds the IMPACT ecosystem and KonfAI.">
+  <meta name="twitter:image" content="https://vboussot.github.io/assets/img/og-cover.png">
+  <meta name="twitter:image:alt" content="Valentin Boussot · medical image analysis researcher.">
+
+  <!-- SVG favicon for modern browsers; PNG apple-touch-icon as the fallback. -->
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+  <link rel="stylesheet" href="assets/css/styles.css">
+
+  <!-- Anti-FOUC: run before first paint (NOT deferred / NOT a module).
+       Marks JS as available (enables reveal-on-scroll) and applies any
+       pinned theme so the page never flashes the wrong colour scheme.
+       Without JS, the CSS still follows the OS preference automatically. -->
+  <script>
+    (function () {
+      var root = document.documentElement;
+      root.classList.add("js");
+      try {
+        var t = localStorage.getItem("theme");
+        if (t === "dark" || t === "light") root.dataset.theme = t;
+      } catch (e) {}
+    })();
+  </script>
+
+  <script src="assets/js/view-helpers.js" defer></script>
+  <script src="assets/js/projects.js" defer></script>
+  <script src="assets/js/publications.js" defer></script>
+  <!-- Render data-driven records before main.js initialises reveal-on-scroll. -->
+  <script src="assets/js/projects-view.js" defer></script>
+  <script src="assets/js/publications-view.js" defer></script>
+  <script src="assets/js/main.js" defer></script>
+
+  <!-- Structured data (schema.org/Person). Factual: affiliation, alumni and
+       profile links match the page content and the verified identity notes. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Valentin Boussot",
+    "url": "https://vboussot.github.io/",
+    "image": "https://vboussot.github.io/assets/img/og-cover.png",
+    "jobTitle": "Research Software Engineer",
+    "knowsAbout": [
+      "Medical image analysis",
+      "Multimodal image registration",
+      "Domain adaptation",
+      "Anatomical-representation learning",
+      "Deep learning"
+    ],
+    "alumniOf": {
+      "@type": "CollegeOrUniversity",
+      "name": "Université de Rennes"
+    },
+    "affiliation": {
+      "@type": "Organization",
+      "name": "LTSI, Laboratoire Traitement du Signal et de l'Image (UMR INSERM 1099), Université de Rennes"
+    },
+    "worksFor": {
+      "@type": "Organization",
+      "name": "Fideus Labs"
+    },
+    "sameAs": [
+      "https://github.com/vboussot",
+      "https://scholar.google.com/citations?user=efBKE4IAAAAJ",
+      "https://huggingface.co/VBoussot",
+      "https://www.linkedin.com/in/valentin-boussot-896ab71b0"
+    ]
+  }
+  </script>
+</head>
+<body>
+  <!-- Reusable inline-SVG icon set (brand/social marks + UI glyphs).
+       Referenced via <use href="#icon-…">. Avoids extra network requests. -->
+  <svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+    <defs>
+      <symbol id="icon-github" viewBox="0 0 24 24">
+        <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222 0 1.606-.014 2.898-.014 3.293 0 .322.216.694.825.576C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+      </symbol>
+      <symbol id="icon-scholar" viewBox="0 0 24 24">
+        <path d="M12 3 1 9l11 6 9-4.91V17h2V9zM5 13.18v3.91L12 21l7-3.82v-3.91L12 17z"/>
+      </symbol>
+      <symbol id="icon-huggingface" viewBox="0 0 24 24">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2Zm-3.1 7a1.3 1.3 0 1 0 0 2.6 1.3 1.3 0 0 0 0-2.6Zm6.2 0a1.3 1.3 0 1 0 0 2.6 1.3 1.3 0 0 0 0-2.6ZM7.7 14a.95.95 0 0 0-.78 1.5 6.2 6.2 0 0 0 10.16 0 .95.95 0 1 0-1.56-1.09 4.3 4.3 0 0 1-7.04 0A.95.95 0 0 0 7.7 14Z"/>
+      </symbol>
+      <symbol id="icon-linkedin" viewBox="0 0 24 24">
+        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/>
+      </symbol>
+      <symbol id="icon-mail" viewBox="0 0 24 24">
+        <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5z"/>
+      </symbol>
+      <symbol id="icon-sun" viewBox="0 0 24 24">
+        <path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM2 13h2a1 1 0 1 0 0-2H2a1 1 0 1 0 0 2zm18 0h2a1 1 0 1 0 0-2h-2a1 1 0 1 0 0 2zM11 2v2a1 1 0 1 0 2 0V2a1 1 0 1 0-2 0zm0 18v2a1 1 0 1 0 2 0v-2a1 1 0 1 0-2 0zM5.99 4.58a1 1 0 0 0-1.41 1.41l1.06 1.06a1 1 0 0 0 1.41-1.41zm12.37 12.37a1 1 0 0 0-1.41 1.41l1.06 1.06a1 1 0 0 0 1.41-1.41zm1.06-10.96a1 1 0 0 0-1.41-1.41l-1.06 1.06a1 1 0 0 0 1.41 1.41zM7.05 18.36a1 1 0 0 0-1.41-1.41l-1.06 1.06a1 1 0 0 0 1.41 1.41z"/>
+      </symbol>
+      <symbol id="icon-moon" viewBox="0 0 24 24">
+        <path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.39 5.39 0 0 1-4.4 2.26 5.4 5.4 0 0 1-3.14-9.8A8.99 8.99 0 0 0 12 3z"/>
+      </symbol>
+      <symbol id="icon-menu" viewBox="0 0 24 24">
+        <path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/>
+      </symbol>
+      <symbol id="icon-close" viewBox="0 0 24 24">
+        <path d="M18.3 5.71 12 12.01 5.7 5.71 4.29 7.12 10.59 13.4l-6.3 6.3 1.41 1.41 6.3-6.3 6.29 6.3 1.42-1.41-6.3-6.3 6.3-6.29z"/>
+      </symbol>
+      <symbol id="icon-arrow-up-right" viewBox="0 0 24 24">
+        <path d="M7 17 17 7M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </symbol>
+
+      <!-- Ecosystem / tech glyphs. Category icons + the PyTorch brand mark.
+           Real marks for real tools only: the KonfAI/IMPACT product cards use the
+           actual repo logos (assets/img/logos); these glyphs only label the
+           supporting categories (integrations, clinical, validation). -->
+      <symbol id="icon-plug" viewBox="0 0 24 24">
+        <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 2v5M15 2v5"/>
+          <path d="M6 7h12v3a6 6 0 0 1-12 0z"/>
+          <path d="M12 16v6"/>
+        </g>
+      </symbol>
+      <symbol id="icon-clinical" viewBox="0 0 24 24">
+        <path d="M14 2a1 1 0 0 1 1 1v6h6a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1h-6v6a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1v-6H3a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1h6V3a1 1 0 0 1 1-1z"/>
+      </symbol>
+      <symbol id="icon-trophy" viewBox="0 0 24 24">
+        <g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M7 4h10v5a5 5 0 0 1-10 0z"/>
+          <path d="M7 5H4v1.6a3 3 0 0 0 3 3M17 5h3v1.6a3 3 0 0 1-3 3"/>
+          <path d="M12 14v3.5M8 21h8M10 21l.4-3.5h3.2L14 21"/>
+        </g>
+      </symbol>
+      <symbol id="icon-pytorch" viewBox="0 0 24 24">
+        <path d="M12 2.7S6 6.7 6 12.4a6 6 0 0 0 12 0c0-1.5-.5-2.9-1.3-4-.2 1.2-1 2-1.9 2.2.6-2.4-.8-5.6-2.8-7.9z"/>
+        <circle cx="15.4" cy="6.6" r="1.05"/>
+      </symbol>
+      <!-- Podium medal (ribbon + disc), recoloured per place via currentColor. -->
+      <symbol id="icon-medal" viewBox="0 0 24 24">
+        <path d="m8.5 2 3.5 6.4L15.5 2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="12" cy="15.5" r="6.3" fill="currentColor"/>
+        <circle cx="12" cy="15.5" r="2.7" fill="#ffffff" fill-opacity="0.62"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container nav-bar">
+      <a class="brand" href="#main" aria-label="Valentin Boussot, home">
+        <span class="brand__mark" aria-hidden="true">VB</span>
+        <span class="brand__name">Valentin Boussot</span>
+      </a>
+
+      <nav class="nav" id="primary-nav" aria-label="Primary">
+        <ul class="nav__list">
+          <li><a class="nav__link" href="#about">About</a></li>
+          <li><a class="nav__link" href="#research">Research</a></li>
+          <li><a class="nav__link" href="#impact">IMPACT</a></li>
+          <li><a class="nav__link" href="#konfai">KonfAI</a></li>
+          <li><a class="nav__link" href="#slicer">3D Slicer</a></li>
+          <li><a class="nav__link" href="#projects">Projects</a></li>
+          <li><a class="nav__link" href="#publications">Publications</a></li>
+          <li><a class="nav__link" href="#experience">Experience</a></li>
+          <li><a class="nav__link" href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="icon-btn theme-toggle" type="button" aria-pressed="false" aria-label="Switch to dark theme">
+          <svg class="icon icon-sun" aria-hidden="true"><use href="#icon-sun"></use></svg>
+          <svg class="icon icon-moon" aria-hidden="true"><use href="#icon-moon"></use></svg>
+        </button>
+        <button class="icon-btn nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Toggle navigation menu">
+          <svg class="icon icon-menu" aria-hidden="true"><use href="#icon-menu"></use></svg>
+          <svg class="icon icon-close" aria-hidden="true"><use href="#icon-close"></use></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <!-- HERO ================================================================= -->
+    <section class="hero">
+      <div class="container hero__inner">
+        <p class="eyebrow">Medical image analysis</p>
+        <h1 class="hero__name">Valentin Boussot</h1>
+        <p class="hero__tagline">
+          Researcher &amp; software engineer in medical image analysis:
+          multimodal registration, domain adaptation, and anatomical-representation learning.
+        </p>
+        <p class="hero__intro">
+          Builds the <strong>IMPACT</strong> ecosystem and the <strong>KonfAI</strong> framework.
+          PhD from Université de Rennes, LTSI (UMR INSERM 1099), advised by Jean-Louis Dillenseger;
+          now a <strong>Research Software Engineer</strong> at Fideus Labs.
+        </p>
+
+        <ul class="cluster hero__chips" role="list">
+          <li class="chip">Multimodal registration</li>
+          <li class="chip">Semantic similarity</li>
+          <li class="chip">Domain adaptation</li>
+          <li class="chip">Deep learning</li>
+          <li class="chip">3D Slicer</li>
+          <li class="chip">ITK / Elastix</li>
+          <li class="chip">Statistical shape &amp; motion models</li>
+        </ul>
+
+        <div class="hero__metrics">
+          <ul class="metric-strip" role="list">
+            <li class="metric">
+              <span class="metric__rank">1st<span class="visually-hidden"> place</span></span>
+              <span class="metric__label">Learn2Reg · Lung CT</span>
+            </li>
+            <li class="metric">
+              <span class="metric__rank">2nd<span class="visually-hidden"> place</span></span>
+              <span class="metric__label">Learn2Reg · Abdomen MR–CT</span>
+            </li>
+            <li class="metric">
+              <span class="metric__rank">2nd<span class="visually-hidden"> place</span></span>
+              <span class="metric__label">PANTHER · Task 2</span>
+            </li>
+            <li class="metric">
+              <span class="metric__rank">3rd<span class="visually-hidden"> place</span></span>
+              <span class="metric__label">SynthRAD 2025 · Tasks 1 &amp; 2</span>
+            </li>
+          </ul>
+          <p class="hero__note">Selected placements in international medical-imaging challenges.</p>
+        </div>
+
+        <ul class="cluster hero__links" role="list">
+          <li>
+            <a class="btn btn--primary" href="https://github.com/vboussot" target="_blank" rel="noopener">
+              <svg class="icon" aria-hidden="true"><use href="#icon-github"></use></svg>
+              GitHub<span class="visually-hidden"> (opens in a new tab)</span>
+            </a>
+          </li>
+          <li>
+            <a class="btn" href="https://scholar.google.com/citations?user=efBKE4IAAAAJ" target="_blank" rel="noopener">
+              <svg class="icon" aria-hidden="true"><use href="#icon-scholar"></use></svg>
+              Google Scholar<span class="visually-hidden"> (opens in a new tab)</span>
+            </a>
+          </li>
+          <li>
+            <a class="btn" href="https://huggingface.co/VBoussot" target="_blank" rel="noopener">
+              <svg class="icon" aria-hidden="true"><use href="#icon-huggingface"></use></svg>
+              Hugging Face<span class="visually-hidden"> (opens in a new tab)</span>
+            </a>
+          </li>
+          <li>
+            <a class="btn" href="https://www.linkedin.com/in/valentin-boussot-896ab71b0" target="_blank" rel="noopener">
+              <svg class="icon" aria-hidden="true"><use href="#icon-linkedin"></use></svg>
+              LinkedIn<span class="visually-hidden"> (opens in a new tab)</span>
+            </a>
+          </li>
+          <li>
+            <a class="btn" href="mailto:valentin@fideus.io">
+              <svg class="icon" aria-hidden="true"><use href="#icon-mail"></use></svg>
+              Email
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ABOUT =============================================================== -->
+    <section class="section" id="about" aria-labelledby="about-title">
+      <div class="container">
+        <div class="section__head">
+          <p class="eyebrow">Profile</p>
+          <h2 id="about-title">About</h2>
+        </div>
+        <div class="reveal about__layout">
+          <div class="prose flow">
+            <p>
+              I'm a researcher and software engineer in medical image analysis, working on
+              multimodal image registration, domain adaptation, and
+              anatomical-representation learning.
+            </p>
+            <p>
+              I carried out my doctorate at the <strong>LTSI</strong>, Laboratoire Traitement du
+              Signal et de l'Image (UMR INSERM 1099), <strong>Université de Rennes</strong>, under
+              the supervision of Professor <strong>Jean-Louis Dillenseger</strong>.
+            </p>
+            <p>
+              Much of this work is collaborative, supervised by Professor
+              <strong>Jean-Louis Dillenseger</strong> and carried out closely with
+              <strong>Cédric Hémon</strong>, co-author on most of these works.
+            </p>
+            <p>
+              I'm now a <strong>Research Software Engineer</strong> at <strong>Fideus Labs</strong>,
+              where I continue to build open, reproducible tools for medical imaging.
+            </p>
+          </div>
+
+          <aside class="card facts" aria-label="Key facts">
+            <dl class="facts__list">
+              <div class="facts__row">
+                <dt>Role</dt>
+                <dd>Research Software Engineer · Fideus Labs</dd>
+              </div>
+              <div class="facts__row">
+                <dt>Based in</dt>
+                <dd>Rennes, France</dd>
+              </div>
+              <div class="facts__row">
+                <dt>Focus</dt>
+                <dd>Multimodal registration · Domain adaptation · Anatomical representations</dd>
+              </div>
+            </dl>
+          </aside>
+        </div>
+
+        <!-- Affiliations, split past → present. PhD (LTSI / INSERM / Université de Rennes)
+             then now (Fideus Labs). Real institutional logos, never recoloured. Light theme:
+             transparent, brand colour on the page. Dark theme: a soft, refined light plate
+             (rounded, gentle shadow) holds the same colour marks. Univ-Rennes & INSERM logos
+             are public domain (Wikimedia); LTSI from the lab site; Fideus from the org. -->
+        <div class="reveal affiliations">
+          <div class="affiliations__group">
+            <span class="affiliations__label">During the PhD</span>
+            <ul class="affiliations__list" role="list">
+              <li class="affiliations__item">
+                <a href="https://www.univ-rennes.fr/" target="_blank" rel="noopener" aria-label="Université de Rennes (opens in a new tab)">
+                  <img class="affiliations__logo" src="assets/img/logos/univ-rennes.svg" alt="Université de Rennes" width="120" height="134" loading="lazy">
+                </a>
+              </li>
+              <li class="affiliations__item">
+                <a href="https://ltsi.univ-rennes.fr/" target="_blank" rel="noopener" aria-label="LTSI, Laboratoire Traitement du Signal et de l'Image (opens in a new tab)">
+                  <img class="affiliations__logo" src="assets/img/logos/ltsi.webp" alt="LTSI, Laboratoire Traitement du Signal et de l'Image" width="470" height="200" loading="lazy">
+                </a>
+              </li>
+              <li class="affiliations__item">
+                <a href="https://www.inserm.fr/" target="_blank" rel="noopener" aria-label="Inserm (opens in a new tab)">
+                  <img class="affiliations__logo" src="assets/img/logos/inserm.svg" alt="Inserm" width="200" height="96" loading="lazy">
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="affiliations__group">
+            <span class="affiliations__label">Now</span>
+            <ul class="affiliations__list" role="list">
+              <li class="affiliations__item">
+                <a href="https://fideus.io/" target="_blank" rel="noopener" aria-label="Fideus Labs (opens in a new tab)">
+                  <img class="affiliations__logo" src="assets/img/logos/fideus.webp" alt="Fideus Labs" width="158" height="200" loading="lazy">
+                  <span class="affiliations__name">Fideus&nbsp;Labs</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESEARCH ============================================================ -->
+    <section class="section" id="research" aria-labelledby="research-title">
+      <div class="container">
+        <div class="section__head">
+          <p class="eyebrow">Doctoral research</p>
+          <h2 id="research-title">Research</h2>
+        </div>
+        <!-- Thesis title -->
+        <div class="reveal research__overview flow">
+          <p class="thesis-title">
+            <em>Anatomical Representations for Robust Multimodal Medical Image Analysis in
+            Deformable Settings</em>
+            <span class="thesis-title__sub">Application to Image-Guided Thoracic Surgery</span>
+          </p>
+        </div>
+
+        <!-- The idea: the core of the thesis. Clinical context is compressed to a single clause;
+             the central message is the IMPACT principle and (below) the synthesis bias. -->
+        <div class="reveal">
+          <div class="section__head">
+            <h3>The idea</h3>
+          </div>
+          <div class="flow">
+            <p>
+              The same anatomy looks completely different across <strong>modality, contrast, noise
+              and artifacts</strong>, so comparing scans by raw intensity breaks down. The thesis
+              reasons about anatomy in the <strong>feature space of pretrained segmentation
+              networks</strong> instead. There the structures line up whatever the image looked
+              like, comparing <strong>what the tissue is</strong>, not how bright it appears.
+            </p>
+            <p>
+              From that <strong>one idea</strong> follow two methods (a registration metric and a
+              synthesis loss, packaged as the reusable <strong>IMPACT ecosystem</strong> below) and
+              one uncomfortable finding about how synthesis is evaluated. The work grew out of
+              image-guided lung surgery (carrying a nodule from a pre-operative CT onto a deformed
+              intra-operative CBCT), but the validation reached far beyond that setting, across
+              modalities, anatomical regions and public challenges.
+            </p>
+          </div>
+
+          <!-- The author's own schematic from the defense deck, re-encoded to WebP. Shown
+               complete at its own aspect ratio (--full) so the edge labels are not cropped. -->
+          <details class="deepdive">
+            <summary>See the shared anatomical space</summary>
+            <div class="deepdive__body">
+              <figure class="deepdive__figure deepdive__figure--full">
+                <img src="assets/img/research/research-duality.webp"
+                     alt="Two lung scans, a fixed and a moving image shown for two patients, mapped through a pretrained segmentation network into a sequence of feature maps, from fine appearance-like detail on the left to coarse semantic structure on the right, ending in an anatomy segmentation overlay; the same structures appear in the same place across both scans regardless of their original appearance."
+                     width="1000" height="506" loading="lazy" decoding="async">
+                <figcaption class="deepdive__cap">
+                  <strong>The shared anatomical space.</strong> A pretrained segmentation network
+                  maps two scans into progressively more anatomical, less appearance-bound
+                  representations (left to right). The same anatomy lands in the same place however
+                  it looked: the common ground where registration recovers anatomy despite
+                  changing appearance, and synthesis changes appearance while preserving it.
+                </figcaption>
+              </figure>
+            </div>
+          </details>
+        </div>
+
+        <!-- The three contributions. Two share the feature-space idea (IMPACT-Reg, IMPACT-Synth);
+             the third is a statistical deformation model. All three are full cards with a no-JS
+             deep-dive and their own figure from the defense deck. -->
+        <div class="reveal">
+          <div class="section__head">
+            <h3>The contributions</h3>
+            <p class="muted">
+              <strong>IMPACT-Reg</strong> and <strong>IMPACT-Synth</strong> are the two sides of the
+              feature-space idea above. A third, a <strong>statistical deformation model</strong>,
+              predicts the lung's change of pose directly.
+            </p>
+          </div>
+
+          <ol class="contributions" role="list">
+            <li class="card contribution">
+              <span class="contribution__num" aria-hidden="true">1</span>
+              <div class="contribution__body">
+                <h4 class="card__title">Multimodal registration · IMPACT-Reg</h4>
+                <p class="card__text">
+                  A modality-agnostic semantic similarity metric built from pretrained
+                  segmentation features, where intensity-based measures break down across
+                  modalities. The registration engine is unchanged (only the similarity metric
+                  changes), so it plugs into both algorithmic (Elastix) and learning-based registration.
+                </p>
+                <ul class="cluster contribution__tags" role="list">
+                  <li class="chip chip--accent">IMPACT-Reg</li>
+                  <li class="chip">Elastix</li>
+                </ul>
+                <details class="deepdive">
+                  <summary>What problem does this solve?</summary>
+                  <div class="deepdive__body flow">
+                    <div class="deepdive__part">
+                      <p class="deepdive__label">Problem</p>
+                      <p>
+                        Aligning two scans of the <strong>same</strong> anatomy across modalities is
+                        hard: their intensities don't correspond, so the intensity-based measures
+                        classic registration relies on break down.
+                      </p>
+                    </div>
+                    <div class="deepdive__part">
+                      <p class="deepdive__label">Key idea</p>
+                      <p>
+                        Compare images in the <strong>feature space of pretrained segmentation
+                        networks</strong>, not raw voxels. A simple L1/L2 distance there becomes a
+                        modality-agnostic similarity measure.
+                      </p>
+                    </div>
+                    <div class="deepdive__part">
+                      <p class="deepdive__label">Two modes</p>
+                      <p>
+                        In Elastix it runs in a <strong>Jacobian</strong> mode (features recomputed
+                        each iteration for the most faithful gradient) or a lighter
+                        <strong>Static</strong> mode using precomputed features. The best backbone
+                        and layer depend on the anatomy and modality: <strong>no universal
+                        recipe</strong>.
+                      </p>
+                    </div>
+                    <div class="deepdive__part">
+                      <p class="deepdive__label">Result</p>
+                      <p>
+                        <strong>1.20 mm</strong> median TRE on CT/CBCT, ranked <strong>1st</strong>
+                        on Learn2Reg Lung CT and <strong>2nd</strong> on Abdomen MR–CT, and merged
+                        into the official Elastix toolkit. It ships in the IMPACT ecosystem (below)
+                        as IMPACT-Reg.
+                      </p>
+                    </div>
+                    <!-- Principle figure from the defense deck (transparent WebP, white ground
+                         keyed out; CSS sits it on a light plate in dark theme for legibility).
+                         Shown via --full so the Jacobian/Static halves are not cropped. -->
+                    <figure class="deepdive__figure deepdive__figure--full">
+                      <img src="assets/img/research/impact-reg-principle.webp"
+                           alt="The IMPACT-Reg principle in two modes. Fixed and moving image patches are passed through a pretrained segmentation network; the distance between their feature maps drives the registration. In Jacobian mode the features are recomputed each iteration so the gradient flows through the network; in Static mode the feature maps are precomputed once and interpolated like multi-channel images."
+                           width="1600" height="1015" loading="lazy" decoding="async">
+                      <figcaption class="deepdive__cap">
+                        <strong>The IMPACT-Reg principle.</strong> Fixed and moving images are
+                        compared in the feature space of a pretrained segmentation network:
+                        <em>Jacobian</em> mode recomputes features each iteration for the most
+                        faithful gradient, <em>Static</em> mode precomputes them for speed.
+                      </figcaption>
+                    </figure>
+                  </div>
+                </details>
+              </div>
+            </li>
+
+            <li class="card contribution">
+              <span class="contribution__num" aria-hidden="true">2</span>
+              <div class="contribution__body">
+                <h4 class="card__title">Anatomy-preserving CT synthesis · IMPACT-Synth</h4>
+                <p class="card__text">
+                  Cross-modality CT-like synthesis as domain adaptation under an
+                  anatomy-preservation constraint: a <strong>content / style</strong> split that
+                  makes CBCT and MRI usable by CT-trained tools without displacing, erasing or
+                  inventing patient anatomy.
+                </p>
+                <ul class="cluster contribution__tags" role="list">
+                  <li class="chip chip--accent">IMPACT-Synth</li>
+                  <li class="chip">Content / style</li>
+                  <li class="chip">SAM perceptual loss</li>
+                  <li class="chip">TotalSegmentator</li>
+                </ul>
+                <details class="deepdive">
+                  <summary>What problem does this solve?</summary>
+                  <div class="deepdive__body flow">
+                    <div class="deepdive__part">
+                      <p class="deepdive__label">Problem</p>
+                      <p>
+                        Many imaging tools are trained <strong>only on CT</strong>, so CBCT and MRI
+                        can't use them. Making those scans CT-like fixes that, but naive translation
+                        can <strong>hallucinate or displace anatomy</strong>.
+                      </p>
+                    </div>
+                    <div class="deepdive__part">
+                      <p class="deepdive__label">Key idea</p>
+                      <p>
+                        Separate <strong>content</strong> from <strong>style</strong>: hold the
+                        anatomy to the source image, move only the appearance toward CT. Anatomy is
+                        compared in the same SAM / TotalSegmentator feature space, so the constraint
+                        is anatomical, not voxel-wise.
+                      </p>
+                    </div>
+                    <div class="deepdive__part">
+                      <p class="deepdive__label">Why it matters</p>
+                      <p>
+                        Relaxing the rigid voxel-to-voxel target is what cuts the geometric bias that,
+                        as the next section shows, supervised synthesis otherwise inherits. A
+                        <strong>SAM perceptual loss</strong> (matching structures in a Segment Anything
+                        feature space, not intensities) is complementary: it reduces the blur of
+                        voxel-wise regression and improves downstream segmentation, but, still trained
+                        on the registered pairs, it does not remove the systematic bias on its own.
+                      </p>
+                    </div>
+                    <div class="deepdive__part">
+                      <p class="deepdive__label">Result</p>
+                      <p>
+                        On VATSop, CBCT→CT-like MAE fell from <strong>227.6</strong> to
+                        <strong>129.7 HU</strong> and lobe-segmentation Dice rose from
+                        <strong>0.898</strong> to <strong>0.930</strong>. Its public form placed
+                        <strong>3rd</strong> at SynthRAD 2025 (Tasks 1 &amp; 2), and ships in the
+                        IMPACT ecosystem (below) as IMPACT-Synth.
+                      </p>
+                    </div>
+                    <!-- Synthesis pipeline figure from the defense deck (transparent WebP;
+                         shown via --full, sat on a light plate in dark theme by the CSS). -->
+                    <figure class="deepdive__figure deepdive__figure--full">
+                      <img src="assets/img/research/impact-synth-pipeline.webp"
+                           alt="The CT synthesis pipeline: the source MR or CBCT and the target CT are preprocessed and registered; the source is augmented and passed as 2.5D input through a UNet++ generator; test-time augmentation and ensembling produce the synthetic CT, supervised by an L1 plus IMPACT-Synth (SAM) loss and scored with MAE, SSIM and PSNR."
+                           width="1600" height="490" loading="lazy" decoding="async">
+                      <figcaption class="deepdive__cap">
+                        <strong>The synthesis pipeline.</strong> A 2.5D UNet++ generator maps the
+                        source MR/CBCT to a synthetic CT, supervised by an L1 + IMPACT-Synth (SAM) loss.
+                      </figcaption>
+                    </figure>
+                  </div>
+                </details>
+              </div>
+            </li>
+            <li class="card contribution">
+              <span class="contribution__num" aria-hidden="true">3</span>
+              <div class="contribution__body">
+                <h4 class="card__title">Statistical deformation model · wPCA</h4>
+                <p class="card__text">
+                  A weighted-PCA prior over lung deformation, learned across the cohort and
+                  recovered for a new patient as a latent inverse problem from the pleural surface
+                  alone, predicting the change of pose so one intra-operative CBCT can be dropped.
+                </p>
+                <ul class="cluster contribution__tags" role="list">
+                  <li class="chip chip--accent">wPCA</li>
+                  <li class="chip">Statistical shape model</li>
+                  <li class="chip">Latent inverse problem</li>
+                </ul>
+                <details class="deepdive">
+                  <summary>What problem does this solve?</summary>
+                  <div class="deepdive__body flow">
+                    <div class="deepdive__part">
+                      <p class="deepdive__label">Problem</p>
+                      <p>
+                        The reference pipeline needs a second, intra-operative CBCT just to recover
+                        how the lung shifts when the patient is repositioned, before it is deflated:
+                        extra dose, time and complexity.
+                      </p>
+                    </div>
+                    <!-- "The need" figure (defense deck, slide 44; flattened on white, light plate in
+                         dark theme). Shows the clinical pipeline with the inflated-lung CBCT crossed
+                         out: the deformation the model removes. Capped width (square diagram). -->
+                    <figure class="deepdive__figure deepdive__figure--full deepdive__figure--cap">
+                      <img src="assets/img/research/deformation-need.webp"
+                           alt="Image-guided lung-surgery pipeline. Pre-operative: a CT is segmented and meshed into a patient-specific lung model. Intra-operative phase 1: instead of acquiring an inflated-lung CBCT (shown crossed out), the change-of-pose deformation is predicted to estimate the intra-operative whole-lung model. Phase 2: a deflated-lung CBCT and a pneumothorax estimation locate the tumour nodule."
+                           width="1024" height="1024" loading="lazy" decoding="async">
+                      <figcaption class="deepdive__cap">
+                        <strong>The need.</strong> Locating the nodule normally takes a second,
+                        inflated-lung CBCT just to capture the change of pose (crossed out). Predicting
+                        that deformation removes the scan; only the deflated-lung CBCT remains.
+                      </figcaption>
+                    </figure>
+                    <div class="deepdive__part">
+                      <p class="deepdive__label">Key idea</p>
+                      <p>
+                        Learn a compact deformation prior across the cohort. Every patient is
+                        registered into a common <strong>template space</strong>, where a
+                        <strong>weighted PCA</strong> captures the plausible pose changes as a mean
+                        field plus a few dominant modes.
+                      </p>
+                    </div>
+                    <div class="deepdive__part">
+                      <p class="deepdive__label">Recovery</p>
+                      <p>
+                        For a new patient, recover those modes' coefficients as a <strong>latent
+                        inverse problem</strong> from the pleural surface alone, then reconstruct the
+                        dense, patient-specific field by B-spline interpolation.
+                      </p>
+                    </div>
+                    <div class="deepdive__part">
+                      <p class="deepdive__label">Result</p>
+                      <p>
+                        Median localisation error drops from <strong>11.96</strong> to
+                        <strong>6.33 mm</strong> (about 47% over a rigid baseline), removing one
+                        intra-operative CBCT. It has no public release, so there is no repository link.
+                      </p>
+                    </div>
+                    <!-- The wPCA train/predict workflow figure from the defense deck (Img12,
+                         flattened on white; CSS sits it on a light plate in dark theme). -->
+                    <figure class="deepdive__figure deepdive__figure--full">
+                      <img src="assets/img/research/deformation-model.webp"
+                           alt="The weighted-PCA deformation model in two workflows. Train: a cohort of CT/CBCT patients is registered into a common template space, where a weighted PCA learns a mean field plus principal modes. Predict: for a new patient, the same registration plus an inverse problem on the modes' coefficients reconstructs a dense deformation field by B-spline interpolation."
+                           width="1500" height="957" loading="lazy" decoding="async">
+                      <figcaption class="deepdive__cap">
+                        <strong>Train and predict.</strong> The cohort builds a compact deformation
+                        prior in a common template space (weighted PCA); for a new patient, an inverse
+                        problem on its coefficients reconstructs the full deformation field.
+                      </figcaption>
+                    </figure>
+                  </div>
+                </details>
+              </div>
+            </li>
+          </ol>
+        </div>
+
+        <!-- The registration bias *in supervised CT synthesis*, the thesis's conceptual
+             centrepiece. The CT target is registered onto the source before training, so the
+             synthesis network inherits the registration convention's geometry, not the patient's
+             true anatomy (Goodhart's law). Placed before the Results to reframe how the rankings
+             below should be read. -->
+        <div class="reveal bias">
+          <p class="eyebrow bias__kicker">An instance of Goodhart's law</p>
+          <h3 class="bias__title">The reference is not the ground truth</h3>
+          <div class="bias__body flow">
+            <p>
+              Supervised CT synthesis learns to reproduce a target CT, but that target was itself
+              <em>registered onto the source</em>, so the registration becomes part of the
+              supervision, residual error and all.
+            </p>
+            <p>
+              That residual is not random noise but <strong>structured geometric label noise</strong>:
+              the network blurs the boundaries it cannot place consistently, and adopts whichever
+              geometry the registration prefers. The looser the alignment, the more it inflates
+              <strong>predictive uncertainty</strong> and weakens <strong>out-of-distribution</strong>
+              robustness.
+            </p>
+            <p>
+              The clinching point is a <strong>performance floor</strong>: a real CT, registered the
+              same way, still carries a non-zero error, and the best supervised models already score
+              <strong>below</strong> it,
+              fitting the registration convention's geometry rather than the patient's anatomy. Swap
+              only the evaluation reference and the leaderboard reorders.
+            </p>
+            <p>
+              The reference is a convention, not the patient's anatomy: Goodhart's law, where
+              <em>a measure that becomes a target stops being a good measure</em>.
+            </p>
+          </div>
+
+          <details class="deepdive">
+            <summary>Why doesn't a better score mean a better synthesis?</summary>
+            <div class="deepdive__body flow">
+              <div class="deepdive__part">
+                <p class="deepdive__label">Why the metric is fooled</p>
+                <p>
+                  A misalignment is cheap on a voxel metric wherever the image is flat: the error a
+                  small displacement produces scales with the <strong>local image gradient</strong>,
+                  so it concentrates at high-contrast interfaces (air, bone, teeth) and stays nearly
+                  invisible elsewhere. The same geometric error can therefore swing MAE widely from
+                  one anatomical region to another.
+                </p>
+              </div>
+              <div class="deepdive__part">
+                <p class="deepdive__label">The floor, measured</p>
+                <p>
+                  Build the targets two ways (a classic Elastix/MI alignment versus IMPACT-Reg) and
+                  the best MAE always lands on the <em>matching</em> evaluation convention. Push it
+                  further: registration alone, with <em>no synthesis at all</em>, already produces
+                  voxel error in the same range as the best supervised models, a
+                  <strong>performance floor</strong> baked into the benchmark.
+                </p>
+              </div>
+              <div class="deepdive__part">
+                <p class="deepdive__label">Anatomy tells the truth</p>
+                <p>
+                  Those registration-only controls keep real CT structure and score far higher on
+                  <strong>anatomical (Dice) fidelity</strong>. So when a supervised model dips
+                  <strong>below</strong> the floor on MAE, it is winning by smoothing edges and
+                  adapting to the evaluation geometry, not by recovering the patient's anatomy.
+                </p>
+              </div>
+              <div class="deepdive__part">
+                <p class="deepdive__label">How to evaluate</p>
+                <p>
+                  Past the floor, voxel gains measure <strong>conformity to the reference, not
+                  anatomical accuracy</strong>, so rankings need anatomy-oriented and downstream-task
+                  checks beside the voxel score. A <strong>SAM perceptual loss</strong> (computed in a
+                  pretrained Segment Anything feature space) cuts oversmoothing and lifts downstream
+                  segmentation over MAE-only and VGG objectives, but it cannot remove the systematic
+                  bias on its own; only relaxing the voxel-to-voxel target (IMPACT-Synth's
+                  content/style) reduces the dependence on a perfectly aligned reference.
+                </p>
+              </div>
+              <!-- Reserved figure slot. The synthesis-bias loop (imperfect registration → biased CT
+                   target → inherited geometry → performance floor / Goodhart) lives as native slide
+                   shapes across several defense slides, with no single clean raster to export, so no
+                   figure is fabricated. If one is ever exported cleanly it drops in here, mirroring
+                   the live .deepdive__figure pattern above:
+              <figure class="deepdive__figure">
+                <img src="assets/img/research/research-bias-loop.webp"
+                     alt="The synthesis-bias loop: an imperfectly registered CT target trains a supervised synthesis model that inherits the reference's residual geometric error, producing a performance floor on the voxel metric."
+                     width="1000" height="540" loading="lazy" decoding="async">
+                <figcaption class="deepdive__cap">
+                  <strong>The synthesis-bias loop</strong>
+                </figcaption>
+              </figure>
+              -->
+            </div>
+          </details>
+        </div>
+
+        <!-- Results -->
+        <div class="reveal">
+          <div class="section__head">
+            <h3>Results</h3>
+            <p class="muted">
+              At scale and in open competition: each method above was entered into public,
+              independently-judged challenges across modalities and anatomical regions.
+            </p>
+          </div>
+
+          <ul class="metric-strip results__rankings" role="list">
+            <li class="metric"><span class="metric__rank">1st<span class="visually-hidden"> place</span></span><span class="metric__label">Learn2Reg · Lung CT</span></li>
+            <li class="metric"><span class="metric__rank">2nd<span class="visually-hidden"> place</span></span><span class="metric__label">Learn2Reg · Abdomen MR–CT</span></li>
+            <li class="metric"><span class="metric__rank">6th<span class="visually-hidden"> place</span></span><span class="metric__label">Learn2Reg · Thorax CBCT</span></li>
+            <li class="metric"><span class="metric__rank">3rd<span class="visually-hidden"> place</span></span><span class="metric__label">SynthRAD 2025 · Tasks 1 &amp; 2</span></li>
+            <li class="metric"><span class="metric__rank">2nd<span class="visually-hidden"> place</span></span><span class="metric__label">PANTHER · Task 2</span></li>
+            <li class="metric"><span class="metric__rank">3rd<span class="visually-hidden"> place</span></span><span class="metric__label">CURVAS</span></li>
+            <li class="metric"><span class="metric__rank">3rd<span class="visually-hidden"> place</span></span><span class="metric__label">CURVAS-PDACVI</span></li>
+            <li class="metric"><span class="metric__rank">6th<span class="visually-hidden"> place</span></span><span class="metric__label">TrackRAD</span></li>
+            <li class="metric"><span class="metric__rank">10th<span class="visually-hidden"> place</span></span><span class="metric__label">SynthRAD 2023 · Task 2</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- IMPACT ECOSYSTEM ==================================================== -->
+    <section class="section" id="impact" aria-labelledby="impact-title">
+      <div class="container">
+        <div class="section__head">
+          <p class="eyebrow">Software</p>
+          <h2 id="impact-title">The IMPACT ecosystem</h2>
+        </div>
+
+        <!-- Intro: states plainly what this section presents — the two methods, shipped as
+             open software (libraries + toolkit integration + challenge validation). The
+             framework (KonfAI) and the clinic (3D Slicer) are their own sections. -->
+        <div class="reveal impact__intro flow">
+          <p class="lead">
+            The <strong>methods above</strong>, shipped as open <strong>software</strong>: reusable
+            libraries for <strong>registration</strong> and <strong>synthesis</strong>, the pretrained
+            backbones behind them, and the integrations that drop them into standard toolkits.
+          </p>
+        </div>
+
+        <!-- Two spotlight method cards (IMPACT-Reg, IMPACT-Synth) with their logos; the
+             supporting artifacts (the Elastix integration and the pretrained backbones) sit in
+             a compact "Also ships" line below, since the intro already describes them. Each link
+             points to a verified-public repo. -->
+        <div class="reveal">
+          <ul class="grid eco-cards eco-cards--spotlight" role="list">
+            <li class="card eco-card eco-card--brand">
+              <div class="eco-card__logo">
+                <img src="assets/img/logos/impact-reg.webp" alt="" width="300" height="300" loading="lazy" decoding="async">
+              </div>
+              <p class="eco-card__label">Registration metric</p>
+              <h3 class="eco-card__title">IMPACT-Reg</h3>
+              <p class="eco-card__text">
+                A modality-agnostic similarity metric, shipped as the reusable
+                <strong>ImpactLoss</strong> library, that drops into a standard registration pipeline.
+              </p>
+              <a class="eco-card__link" href="https://github.com/vboussot/ImpactLoss" target="_blank" rel="noopener">
+                <svg class="icon" aria-hidden="true"><use href="#icon-github"></use></svg>
+                ImpactLoss<span class="visually-hidden"> repository (opens in a new tab)</span>
+              </a>
+            </li>
+
+            <li class="card eco-card eco-card--brand">
+              <div class="eco-card__logo">
+                <img src="assets/img/logos/impact-synth.webp" alt="" width="300" height="300" loading="lazy" decoding="async">
+              </div>
+              <p class="eco-card__label">CT synthesis</p>
+              <h3 class="eco-card__title">IMPACT-Synth</h3>
+              <p class="eco-card__text">
+                Open training code and models for cross-modality CT synthesis, released in the
+                public, reproducible form that placed 3rd at SynthRAD 2025.
+              </p>
+              <a class="eco-card__link" href="https://github.com/vboussot/Synthrad2025_Task_1" target="_blank" rel="noopener">
+                <svg class="icon" aria-hidden="true"><use href="#icon-github"></use></svg>
+                Synthrad2025_Task_1<span class="visually-hidden"> repository (opens in a new tab)</span>
+              </a>
+            </li>
+          </ul>
+
+          <!-- Supporting artifacts, demoted to a compact line (the intro describes them). -->
+          <p class="eco-also">
+            <span class="eco-also__label">Also ships</span>
+            <a class="eco-also__link" href="https://github.com/vboussot/ImpactElastix" target="_blank" rel="noopener">
+              <svg class="icon" aria-hidden="true"><use href="#icon-github"></use></svg>
+              ImpactElastix<span class="visually-hidden"> repository (opens in a new tab)</span>
+            </a>
+            <span class="eco-also__sep" aria-hidden="true">·</span>
+            <a class="eco-also__link" href="https://huggingface.co/VBoussot/impact-torchscript-models" target="_blank" rel="noopener">
+              <img class="link-logo" src="assets/img/logos/huggingface.svg" alt="" width="16" height="16" loading="lazy" decoding="async">
+              impact-torchscript-models<span class="visually-hidden"> on Hugging Face (opens in a new tab)</span>
+            </a>
+          </p>
+        </div>
+
+        <!-- Tech stack. Real marks only: PyTorch &amp; Hugging Face carry brand
+             icons; the remaining tools are named as plain chips (no fabricated logos). -->
+        <div class="reveal eco-stack">
+          <span class="eco-stack__label">Built on</span>
+          <!-- Real brand logos where they exist (icon marks beside the name for PyTorch /
+               Hugging Face / 3D Slicer; the ITK and Elastix marks are wordmarks, so they
+               stand alone with an accessible name). SAM and TotalSegmentator have no official
+               logo, so they stay as plain text chips — no mark is invented. -->
+          <ul class="cluster" role="list">
+            <li class="chip"><img class="chip__logo" src="assets/img/logos/pytorch.svg" alt="" width="16" height="16" loading="lazy" decoding="async">PyTorch</li>
+            <li class="chip"><img class="chip__logo chip__logo--word" src="assets/img/logos/itk.webp" alt="ITK" width="38" height="18" loading="lazy" decoding="async"></li>
+            <li class="chip"><img class="chip__logo chip__logo--word" src="assets/img/logos/elastix.webp" alt="Elastix" width="39" height="18" loading="lazy" decoding="async"></li>
+            <li class="chip"><img class="chip__logo" src="assets/img/logos/slicer.svg" alt="" width="16" height="16" loading="lazy" decoding="async">3D Slicer</li>
+            <li class="chip">SAM</li>
+            <li class="chip">TotalSegmentator</li>
+            <li class="chip"><img class="chip__logo" src="assets/img/logos/huggingface.svg" alt="" width="16" height="16" loading="lazy" decoding="async">Hugging Face</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- KONFAI ============================================================= -->
+    <!-- Decoupled from the IMPACT ecosystem: KonfAI is its own open-source framework.
+         It powers the IMPACT methods and the challenge solutions, but is referenced
+         lightly rather than presented as a layer of IMPACT. -->
+    <section class="section" id="konfai" aria-labelledby="konfai-title">
+      <div class="container">
+        <div class="section__head">
+          <p class="eyebrow">Open-source framework</p>
+          <h2 id="konfai-title">KonfAI</h2>
+        </div>
+        <div class="reveal card konfai">
+          <div class="konfai__intro">
+            <span class="konfai__logo">
+              <img src="assets/img/logos/konfai.webp" alt="" width="440" height="220" loading="lazy" decoding="async">
+            </span>
+            <div class="flow konfai__lead">
+              <p class="lead">
+                <strong>KonfAI</strong> is a modular, <strong>YAML-driven</strong> PyTorch framework
+                for medical imaging: it defines complete training, inference and evaluation
+                <strong>pipelines</strong> through configuration, not orchestration scripts. The same
+                framework powers the IMPACT methods above and the ranked challenge solutions below.
+              </p>
+            </div>
+          </div>
+
+          <ul class="cluster konfai__features" role="list">
+            <li class="chip">YAML-driven pipelines</li>
+            <li class="chip">Patch-based learning</li>
+            <li class="chip">Test-time augmentation</li>
+            <li class="chip">Model ensembling</li>
+            <li class="chip">Uncertainty estimation</li>
+            <li class="chip">Deep supervision</li>
+            <li class="chip">Multi-model / GAN</li>
+            <li class="chip">Reproducible by config</li>
+          </ul>
+
+          <div class="konfai__cols">
+            <div class="konfai__pillar">
+              <h3 class="konfai__pillar-title">Agent-ready: KonfAI-MCP</h3>
+              <p>
+                A deterministic backend for <strong>LLM-driven experimentation</strong>. Through the
+                <strong>KonfAI-MCP</strong> server, agents inspect datasets, generate and refine
+                configurations, launch experiments and analyse results, with every run reproducible
+                and grounded in YAML.
+              </p>
+            </div>
+            <div class="konfai__pillar">
+              <h3 class="konfai__pillar-title">KonfAI Apps</h3>
+              <p>
+                Stable workflows packaged as self-contained <strong>KonfAI Apps</strong> (inference,
+                evaluation, uncertainty, fine-tuning), usable from the CLI, the Python API, a remote
+                server, or directly in <strong>3D&nbsp;Slicer</strong>.
+              </p>
+            </div>
+          </div>
+
+          <ul class="cluster konfai__links" role="list">
+            <li>
+              <a class="btn btn--primary" href="https://github.com/vboussot/KonfAI" target="_blank" rel="noopener">
+                <svg class="icon" aria-hidden="true"><use href="#icon-github"></use></svg>
+                KonfAI on GitHub<span class="visually-hidden"> (opens in a new tab)</span>
+              </a>
+            </li>
+            <li>
+              <a class="btn" href="https://arxiv.org/abs/2508.09823" target="_blank" rel="noopener">
+                <svg class="icon" aria-hidden="true"><use href="#icon-scholar"></use></svg>
+                Paper (arXiv)<span class="visually-hidden"> (opens in a new tab)</span>
+              </a>
+            </li>
+            <li>
+              <a class="btn" href="https://konfai.readthedocs.io/en/latest/" target="_blank" rel="noopener">
+                <svg class="icon" aria-hidden="true"><use href="#icon-arrow-up-right"></use></svg>
+                Documentation<span class="visually-hidden"> (opens in a new tab)</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3D SLICER =========================================================== -->
+    <!-- Clinical showcase, decoupled from IMPACT: the methods running as open 3D Slicer
+         extensions. Real application screenshots + links to the five public extension repos
+         (verified public on github.com/vboussot). Screenshot <img> alt is descriptive (a
+         screenshot, not a logo). -->
+    <section class="section" id="slicer" aria-labelledby="slicer-title">
+      <div class="container">
+        <div class="section__head">
+          <p class="eyebrow">In the clinic</p>
+          <h2 id="slicer-title">Running in 3D&nbsp;Slicer</h2>
+          <p class="muted">
+            The methods reach the clinic as open extensions for <strong>3D&nbsp;Slicer</strong>, the
+            free, widely used platform for medical-image computing. A clinician or researcher loads
+            their own scans and runs each one interactively, with quality assessment built in. The
+            screenshots below are the actual extensions in use.
+          </p>
+        </div>
+        <ul class="slicer__grid" role="list">
+          <li class="slicer__item card">
+            <figure class="slicer__fig">
+              <img src="assets/img/slicer/impact-reg.webp" alt="The IMPACT-Reg extension in 3D Slicer aligning a head-and-neck CT to a CBCT, with the registration panel and fused image views." width="1000" height="516" loading="lazy" decoding="async">
+              <figcaption class="slicer__cap">
+                <strong>SlicerImpactReg</strong> · multimodal CT/CBCT registration
+              </figcaption>
+            </figure>
+          </li>
+          <li class="slicer__item card">
+            <figure class="slicer__fig">
+              <img src="assets/img/slicer/impact-synth.webp" alt="The IMPACT-Synth extension in 3D Slicer generating a synthetic CT from a CBCT, with the synthesis panel and the resulting CT-like image." width="1000" height="523" loading="lazy" decoding="async">
+              <figcaption class="slicer__cap">
+                <strong>SlicerImpactSynth</strong> · CBCT→CT-like synthesis, running the reusable
+                <strong>TotalSynth</strong> whole-body sCT models
+              </figcaption>
+            </figure>
+          </li>
+        </ul>
+        <p class="muted slicer__exts-intro">
+          Five open extensions cover registration, synthesis, segmentation, the KonfAI apps, and
+          dose accumulation:
+        </p>
+        <ul class="cluster slicer__exts" role="list">
+          <li>
+            <a class="btn" href="https://github.com/vboussot/SlicerImpactReg" target="_blank" rel="noopener">
+              <svg class="icon" aria-hidden="true"><use href="#icon-github"></use></svg>
+              SlicerImpactReg<span class="visually-hidden"> repository (opens in a new tab)</span>
+            </a>
+          </li>
+          <li>
+            <a class="btn" href="https://github.com/vboussot/SlicerImpactSynth" target="_blank" rel="noopener">
+              <svg class="icon" aria-hidden="true"><use href="#icon-github"></use></svg>
+              SlicerImpactSynth<span class="visually-hidden"> repository (opens in a new tab)</span>
+            </a>
+          </li>
+          <li>
+            <a class="btn" href="https://github.com/vboussot/SlicerImpactSeg" target="_blank" rel="noopener">
+              <svg class="icon" aria-hidden="true"><use href="#icon-github"></use></svg>
+              SlicerImpactSeg<span class="visually-hidden"> repository (opens in a new tab)</span>
+            </a>
+          </li>
+          <li>
+            <a class="btn" href="https://github.com/vboussot/SlicerKonfAI" target="_blank" rel="noopener">
+              <svg class="icon" aria-hidden="true"><use href="#icon-github"></use></svg>
+              SlicerKonfAI<span class="visually-hidden"> repository (opens in a new tab)</span>
+            </a>
+          </li>
+          <li>
+            <a class="btn" href="https://github.com/vboussot/SlicerImpactDoseAcc" target="_blank" rel="noopener">
+              <svg class="icon" aria-hidden="true"><use href="#icon-github"></use></svg>
+              SlicerImpactDoseAcc<span class="visually-hidden"> repository (opens in a new tab)</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- PROJECTS =========================================================== -->
+    <!-- Generated from the live-verified records in projects.js. -->
+    <section class="section" id="projects" aria-labelledby="projects-title">
+      <div class="container">
+        <div class="section__head">
+          <p class="eyebrow">Open source</p>
+          <h2 id="projects-title">Projects</h2>
+          <p class="muted">
+            Open, reproducible tools and challenge solutions: the KonfAI framework,
+            the IMPACT methods, their Elastix and 3D&nbsp;Slicer integrations, ranked
+            public-challenge entries, and pretrained models and datasets on
+            Hugging&nbsp;Face. Each card links to its GitHub repository or
+            Hugging&nbsp;Face page.
+          </p>
+        </div>
+
+        <div class="reveal">
+          <ul class="grid projects" id="projects-grid" role="list"></ul>
+
+          <noscript>
+            <p class="placeholder">
+              The project grid needs JavaScript. You can browse every repository directly on
+              <a href="https://github.com/vboussot" target="_blank" rel="noopener">
+                github.com/vboussot<span class="visually-hidden"> (opens in a new tab)</span>
+              </a>.
+            </p>
+          </noscript>
+        </div>
+
+        <!-- Upstream contribution: the IMPACT metric merged into official Elastix
+             (verified on GitHub 2026-06-28). A single, third-party-validated credential,
+             presented as one focused statement rather than a lone grid card. -->
+        <aside class="reveal upstream" aria-label="Upstream contribution">
+          <p class="upstream__label">Upstream contribution</p>
+          <p class="upstream__text">
+            The <strong>IMPACT</strong> semantic similarity metric was merged into the
+            official <strong>Elastix</strong> registration toolkit, a third-party-validated
+            contribution to a shared, widely used medical-imaging tool.
+          </p>
+          <a class="upstream__link" href="https://github.com/SuperElastix/elastix" target="_blank" rel="noopener">
+            <svg class="icon" aria-hidden="true"><use href="#icon-github"></use></svg>
+            SuperElastix/elastix<span class="visually-hidden"> repository (opens in a new tab)</span>
+            <svg class="icon" aria-hidden="true"><use href="#icon-arrow-up-right"></use></svg>
+          </a>
+        </aside>
+      </div>
+    </section>
+
+    <!-- PUBLICATIONS ======================================================= -->
+    <!-- Generated from the verified records in publications.js, grouped by type. -->
+    <section class="section" id="publications" aria-labelledby="publications-title">
+      <div class="container">
+        <div class="section__head">
+          <p class="eyebrow">Selected works</p>
+          <h2 id="publications-title">Publications</h2>
+          <p class="muted">
+            Lead-author flagship works alongside peer-reviewed challenge reports and
+            collaborations. Items still in peer review are marked <em>under review</em>.
+          </p>
+        </div>
+
+        <div class="reveal">
+          <div class="publications" id="publications-list"></div>
+
+          <p class="note publications__more">
+            This is a selection. For the complete, up-to-date list see
+            <a href="https://scholar.google.com/citations?user=efBKE4IAAAAJ" target="_blank" rel="noopener">
+              Google&nbsp;Scholar<span class="visually-hidden"> (opens in a new tab)</span></a>.
+          </p>
+
+          <noscript>
+            <p class="placeholder">
+              The publication list needs JavaScript. The full record is available on
+              <a href="https://scholar.google.com/citations?user=efBKE4IAAAAJ" target="_blank" rel="noopener">Google Scholar</a>.
+            </p>
+          </noscript>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE ========================================================== -->
+    <!-- A simple teaching-and-mobility timeline, placed last (before Contact).
+         Kept deliberately light: role, org · place, dates, one line. Roles are <h3>. -->
+    <section class="section" id="experience" aria-labelledby="experience-title">
+      <div class="container">
+        <div class="section__head">
+          <p class="eyebrow">Teaching &amp; mobility</p>
+          <h2 id="experience-title">Experience</h2>
+        </div>
+        <!-- Each role carries the institution logo (real marks, linked to the org site).
+             Affiliation logos keep a meaningful alt; the link is aria-labelled. The CSS sits
+             dark wordmarks (ESIR) on a soft plate in dark theme, transparent in light. -->
+        <ol class="reveal timeline" role="list">
+          <li class="timeline__item">
+            <a class="timeline__logo" href="https://esir.univ-rennes.fr/" target="_blank" rel="noopener" aria-label="ESIR, École Supérieure d'Ingénieurs de Rennes (opens in a new tab)">
+              <img class="timeline__logo-img" src="assets/img/logos/esir.webp" alt="ESIR, École Supérieure d'Ingénieurs de Rennes" width="560" height="252" loading="lazy" decoding="async">
+            </a>
+            <div class="timeline__body">
+              <div class="timeline__head">
+                <h3 class="timeline__role">Teaching Assistant</h3>
+                <span class="timeline__dates">Dec 2023 – May 2025</span>
+              </div>
+              <p class="timeline__org">ESIR · Rennes, France</p>
+              <p class="timeline__desc">
+                Taught discrete mathematics, machine learning and system modelling to engineering
+                students; led tutorial and practical sessions.
+              </p>
+            </div>
+          </li>
+          <li class="timeline__item">
+            <a class="timeline__logo" href="https://www.csiro.au/" target="_blank" rel="noopener" aria-label="CSIRO (opens in a new tab)">
+              <img class="timeline__logo-img" src="assets/img/logos/csiro.svg" alt="CSIRO" width="120" height="120" loading="lazy" decoding="async">
+            </a>
+            <div class="timeline__body">
+              <div class="timeline__head">
+                <h3 class="timeline__role">Visiting PhD Student</h3>
+                <span class="timeline__dates">Apr – Oct 2023</span>
+              </div>
+              <p class="timeline__org">CSIRO · Brisbane, Australia</p>
+              <p class="timeline__desc">
+                Six-month research mobility on medical image analysis.
+              </p>
+            </div>
+          </li>
+          <li class="timeline__item">
+            <a class="timeline__logo" href="https://iut-rennes.univ-rennes.fr/" target="_blank" rel="noopener" aria-label="IUT de Rennes (opens in a new tab)">
+              <img class="timeline__logo-img" src="assets/img/logos/iut.webp" alt="IUT de Rennes" width="300" height="301" loading="lazy" decoding="async">
+            </a>
+            <div class="timeline__body">
+              <div class="timeline__head">
+                <h3 class="timeline__role">Teaching Assistant</h3>
+                <span class="timeline__dates">Nov 2021 – Mar 2023</span>
+              </div>
+              <p class="timeline__org">IUT de Rennes · Rennes, France</p>
+              <p class="timeline__desc">
+                Taught C and LabVIEW programming and electronics to undergraduate students; led
+                practical sessions.
+              </p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- CONTACT ============================================================ -->
+    <section class="section" id="contact" aria-labelledby="contact-title">
+      <div class="container">
+        <div class="section__head">
+          <p class="eyebrow">Get in touch</p>
+          <h2 id="contact-title">Contact</h2>
+        </div>
+        <div class="reveal contact flow">
+          <p class="lead contact__intro">
+            Interested in multimodal registration, domain adaptation, or the IMPACT and KonfAI
+            tools? I'm always happy to discuss research, collaborations and open-source
+            contributions. The quickest way to reach me is by email.
+          </p>
+
+          <ul class="cluster contact__links" role="list">
+            <li>
+              <a class="btn btn--primary" href="mailto:valentin@fideus.io">
+                <svg class="icon" aria-hidden="true"><use href="#icon-mail"></use></svg>
+                valentin@fideus.io
+              </a>
+            </li>
+            <li>
+              <a class="btn" href="https://github.com/vboussot" target="_blank" rel="noopener">
+                <svg class="icon" aria-hidden="true"><use href="#icon-github"></use></svg>
+                GitHub<span class="visually-hidden"> (opens in a new tab)</span>
+              </a>
+            </li>
+            <li>
+              <a class="btn" href="https://scholar.google.com/citations?user=efBKE4IAAAAJ" target="_blank" rel="noopener">
+                <svg class="icon" aria-hidden="true"><use href="#icon-scholar"></use></svg>
+                Google Scholar<span class="visually-hidden"> (opens in a new tab)</span>
+              </a>
+            </li>
+            <li>
+              <a class="btn" href="https://huggingface.co/VBoussot" target="_blank" rel="noopener">
+                <svg class="icon" aria-hidden="true"><use href="#icon-huggingface"></use></svg>
+                Hugging Face<span class="visually-hidden"> (opens in a new tab)</span>
+              </a>
+            </li>
+            <li>
+              <a class="btn" href="https://www.linkedin.com/in/valentin-boussot-896ab71b0" target="_blank" rel="noopener">
+                <svg class="icon" aria-hidden="true"><use href="#icon-linkedin"></use></svg>
+                LinkedIn<span class="visually-hidden"> (opens in a new tab)</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <p>© <span id="footer-year">2026</span> Valentin Boussot</p>
+      <ul class="site-footer__links" role="list">
+        <li><a href="https://github.com/vboussot" target="_blank" rel="noopener">GitHub<span class="visually-hidden"> (opens in a new tab)</span></a></li>
+        <li><a href="https://scholar.google.com/citations?user=efBKE4IAAAAJ" target="_blank" rel="noopener">Scholar<span class="visually-hidden"> (opens in a new tab)</span></a></li>
+        <li><a href="https://huggingface.co/VBoussot" target="_blank" rel="noopener">Hugging Face<span class="visually-hidden"> (opens in a new tab)</span></a></li>
+        <li><a href="https://www.linkedin.com/in/valentin-boussot-896ab71b0" target="_blank" rel="noopener">LinkedIn<span class="visually-hidden"> (opens in a new tab)</span></a></li>
+        <li><a href="mailto:valentin@fideus.io">Email</a></li>
+      </ul>
+    </div>
+  </footer>
+</body>
+</html>

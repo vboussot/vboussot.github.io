@@ -1,0 +1,2037 @@
+/* =============================================================================
+   Valentin Boussot — vboussot.github.io
+   Design system & single source of truth.
+
+   Structure:
+     1. Design tokens (colors + automatic/manual light-dark, type, spacing…)
+     2. Reset & base
+     3. Typography
+     4. Layout primitives (container, section, grid)
+     5. Components (button, chip, card, metric, icon)
+     6. Accessibility (skip link, focus, reduced motion)
+     7. Site header / navigation
+     8. Hero
+     9. Section placeholders + footer
+    10. Reveal-on-scroll
+   ========================================================================== */
+
+/* 1. DESIGN TOKENS ========================================================== */
+
+:root {
+  /* --- Raw palette (referenced by semantic tokens; not used directly) ---
+     Visual language: warm paper · deep ink · refined ink-blue (Phase 01).
+     The accent is stripped of the old "GitHub blue" cast; backgrounds carry a
+     faint warm tint so the page reads as paper, not a cool dashboard. All text,
+     accent and on-accent pairings are verified WCAG 2.2 AA in both themes. */
+  --c-bg-light: #f6f4ef;
+  --c-bg-dark: #15161b;
+  --c-surface-light: #fffdf9;
+  --c-surface-dark: #1c1e25;
+  --c-surface-2-light: #eeeae1;
+  --c-surface-2-dark: #23262e;
+  --c-border-light: #e4dfd5;
+  --c-border-dark: #2c2f38;
+  --c-border-strong-light: #d2ccbe;
+  --c-border-strong-dark: #3c404b;
+  --c-text-light: #1c1d22;
+  --c-text-dark: #e8e6df;
+  --c-muted-light: #5c5a54;
+  --c-muted-dark: #9b988f;
+  --c-accent-light: #33508f;
+  --c-accent-dark: #97abe8;
+  --c-accent-hover-light: #27406f;
+  --c-accent-hover-dark: #aebede;
+  --c-on-accent-light: #ffffff;
+  --c-on-accent-dark: #15161b;
+  --c-accent-soft-light: rgba(51, 80, 143, 0.10);
+  --c-accent-soft-dark: rgba(151, 171, 232, 0.14);
+  --c-ring-light: rgba(51, 80, 143, 0.45);
+  --c-ring-dark: rgba(151, 171, 232, 0.55);
+  --c-header-light: rgba(246, 244, 239, 0.80);
+  --c-header-dark: rgba(21, 22, 27, 0.72);
+  --c-shadow-light: 30 22% 14%;
+  --c-shadow-dark: 28 30% 2%;
+
+  /* --- Semantic colour tokens: default = LIGHT --- */
+  color-scheme: light;
+  --bg: var(--c-bg-light);
+  --surface: var(--c-surface-light);
+  --surface-2: var(--c-surface-2-light);
+  --border: var(--c-border-light);
+  --border-strong: var(--c-border-strong-light);
+  --text: var(--c-text-light);
+  --muted: var(--c-muted-light);
+  --accent: var(--c-accent-light);
+  --accent-hover: var(--c-accent-hover-light);
+  --on-accent: var(--c-on-accent-light);
+  --accent-soft: var(--c-accent-soft-light);
+  --accent-warm: #b06f12; /* gold/amber secondary accent (achievements, highlights) */
+  --ring: var(--c-ring-light);
+  --header-bg: var(--c-header-light);
+  --shadow-hsl: var(--c-shadow-light);
+
+  /* --- Shadows (theme-aware via --shadow-hsl) --- */
+  --shadow-1: 0 1px 2px hsl(var(--shadow-hsl) / 0.06), 0 1px 3px hsl(var(--shadow-hsl) / 0.09);
+  --shadow-2: 0 4px 14px hsl(var(--shadow-hsl) / 0.12);
+  --shadow-3: 0 14px 36px hsl(var(--shadow-hsl) / 0.16);
+
+  /* --- Typography (fluid scale) --- */
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", "Cascadia Code",
+    Menlo, Consolas, monospace;
+
+  --fs-xs: clamp(0.72rem, 0.70rem + 0.10vw, 0.78rem);
+  --fs-sm: clamp(0.82rem, 0.79rem + 0.16vw, 0.91rem);
+  --fs-base: clamp(0.95rem, 0.92rem + 0.20vw, 1.03rem);
+  --fs-md: clamp(1.05rem, 1.00rem + 0.32vw, 1.20rem);
+  --fs-lg: clamp(1.20rem, 1.10rem + 0.52vw, 1.45rem);
+  --fs-xl: clamp(1.45rem, 1.28rem + 0.85vw, 1.85rem);
+  --fs-2xl: clamp(1.80rem, 1.50rem + 1.45vw, 2.45rem);
+  --fs-3xl: clamp(2.10rem, 1.60rem + 2.40vw, 3.10rem);
+
+  --lh-tight: 1.15;
+  --lh-snug: 1.38;
+  --lh: 1.62;
+
+  /* --- Spacing scale --- */
+  --sp-1: 0.25rem;
+  --sp-2: 0.5rem;
+  --sp-3: 0.75rem;
+  --sp-4: 1rem;
+  --sp-5: 1.5rem;
+  --sp-6: 2rem;
+  --sp-7: 3rem;
+  --sp-8: 4rem;
+  --sp-9: 6rem;
+
+  /* --- Sizing / shape --- */
+  --container: 1040px;
+  --container-pad: clamp(1rem, 0.55rem + 2vw, 2rem);
+  --header-h: 60px;
+
+  --r-sm: 6px;
+  --r: 10px;
+  --r-lg: 16px;
+  --r-full: 999px;
+
+  /* --- Motion --- */
+  --dur-1: 120ms;
+  --dur-2: 200ms;
+  --dur-3: 360ms;
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Automatic dark — when the OS prefers dark AND the user has not forced light */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: var(--c-bg-dark);
+    --surface: var(--c-surface-dark);
+    --surface-2: var(--c-surface-2-dark);
+    --border: var(--c-border-dark);
+    --border-strong: var(--c-border-strong-dark);
+    --text: var(--c-text-dark);
+    --muted: var(--c-muted-dark);
+    --accent: var(--c-accent-dark);
+    --accent-hover: var(--c-accent-hover-dark);
+    --on-accent: var(--c-on-accent-dark);
+    --accent-soft: var(--c-accent-soft-dark);
+    --accent-warm: #e2a73a;
+    --ring: var(--c-ring-dark);
+    --header-bg: var(--c-header-dark);
+    --shadow-hsl: var(--c-shadow-dark);
+  }
+}
+
+/* Manual override — force DARK regardless of system preference */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: var(--c-bg-dark);
+  --surface: var(--c-surface-dark);
+  --surface-2: var(--c-surface-2-dark);
+  --border: var(--c-border-dark);
+  --border-strong: var(--c-border-strong-dark);
+  --text: var(--c-text-dark);
+  --muted: var(--c-muted-dark);
+  --accent: var(--c-accent-dark);
+  --accent-hover: var(--c-accent-hover-dark);
+  --on-accent: var(--c-on-accent-dark);
+  --accent-soft: var(--c-accent-soft-dark);
+  --accent-warm: #e2a73a;
+  --ring: var(--c-ring-dark);
+  --header-bg: var(--c-header-dark);
+  --shadow-hsl: var(--c-shadow-dark);
+}
+
+/* Manual override — force LIGHT regardless of system preference
+   (colour tokens already default to light on :root; just pin the scheme) */
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+/* 2. RESET & BASE =========================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--header-h) + var(--sp-4));
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: var(--fs-base);
+  line-height: var(--lh);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  min-height: 100svh;
+}
+
+img,
+svg,
+picture {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: var(--accent);
+  text-decoration-color: color-mix(in srgb, var(--accent) 40%, transparent);
+  text-underline-offset: 0.18em;
+}
+
+a:hover {
+  text-decoration-color: var(--accent);
+}
+
+ul[role="list"] {
+  list-style: none;
+  padding: 0;
+}
+
+/* 3. TYPOGRAPHY ============================================================= */
+
+h1,
+h2,
+h3 {
+  line-height: var(--lh-tight);
+  font-weight: 700;
+  letter-spacing: -0.012em;
+  text-wrap: balance;
+}
+
+h2 {
+  font-size: var(--fs-2xl);
+}
+
+h3 {
+  font-size: var(--fs-lg);
+  letter-spacing: -0.006em;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+.eyebrow {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.lead {
+  font-size: var(--fs-md);
+  color: var(--muted);
+  line-height: var(--lh-snug);
+}
+
+.muted {
+  color: var(--muted);
+}
+
+/* 4. LAYOUT PRIMITIVES ====================================================== */
+
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--container-pad);
+}
+
+.section {
+  padding-block: clamp(var(--sp-7), 4vw + 1rem, var(--sp-9));
+}
+
+.section + .section {
+  border-top: 1px solid var(--border);
+}
+
+.section__head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-5);
+  max-width: 60ch;
+}
+
+.grid {
+  display: grid;
+  gap: var(--sp-4);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+}
+
+.cluster {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+  align-items: center;
+}
+
+/* 4b. EDITORIAL DETAIL ======================================================
+   Quiet typographic craft built only on the Phase-01 tokens & primitives — no
+   DOM, no new colours, no web fonts. It lives next to the layout layer because
+   it decorates .section / .section__head, and themes automatically. */
+
+/* Accent "kicker" — a short rule under each section eyebrow; a recurring
+   editorial motif that ties the section heads together. Scoped to the
+   top-level section eyebrows (only those carry a .eyebrow) and decorative. */
+.section > .container > .section__head > .eyebrow::after {
+  content: "";
+  display: block;
+  width: 2.5rem;
+  height: 2px;
+  margin-top: var(--sp-2);
+  background-color: var(--accent);
+  border-radius: var(--r-full);
+}
+
+/* Hairline section divider — finer and warmer than a solid line: it keeps its
+   1px from the base declaration but lets the warm paper show through a
+   translucent mix of the border token. */
+.section + .section {
+  border-top-color: color-mix(in srgb, var(--border) 60%, transparent);
+}
+
+/* Tabular numerals so challenge rankings and headline stats align on their
+   digits (pure system-font refinement — no new fonts). */
+.metric__rank,
+.stat__value {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Paper grain — a barely-there fixed overlay giving the page a faint tooth.
+   Pure CSS: an inline-SVG fractalNoise as a data: image, tiled small. It sits
+   under all content (z-index:-1) and ignores pointer events, so it never tints
+   text or intercepts input — the grain shows only in the open paper between
+   cards. mix-blend-mode: soft-light modulates the paper/ink behind it (faint
+   dark flecks on paper, faint light flecks on ink); per-theme opacity balances
+   the two because soft-light has more room to lift a dark backdrop. It is
+   static (no animation), so it is inherently reduced-motion-safe and adds
+   nothing to the reduced-motion block. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paper)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+  opacity: 0.5;
+  mix-blend-mode: soft-light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) body::after {
+    opacity: 0.2;
+  }
+}
+
+:root[data-theme="dark"] body::after {
+  opacity: 0.2;
+}
+
+/* 5. COMPONENTS ============================================================= */
+
+/* Icons (inline-SVG sprite) */
+.icon {
+  width: 1.15em;
+  height: 1.15em;
+  flex: none;
+  fill: currentColor;
+  vertical-align: middle;
+}
+
+/* Button */
+.btn {
+  --btn-bg: var(--surface);
+  --btn-fg: var(--text);
+  --btn-bd: var(--border-strong);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  padding: 0.6rem 1rem;
+  font: inherit;
+  font-size: var(--fs-sm);
+  font-weight: 550;
+  line-height: 1;
+  color: var(--btn-fg);
+  background-color: var(--btn-bg);
+  border: 1px solid var(--btn-bd);
+  border-radius: var(--r);
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color var(--dur-2) var(--ease),
+    border-color var(--dur-2) var(--ease), color var(--dur-2) var(--ease),
+    transform var(--dur-1) var(--ease);
+}
+
+.btn:hover {
+  --btn-bd: var(--accent);
+  --btn-fg: var(--accent);
+  background-color: var(--accent-soft);
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn--primary {
+  --btn-bg: var(--accent);
+  --btn-fg: var(--on-accent);
+  --btn-bd: var(--accent);
+}
+
+.btn--primary:hover {
+  --btn-bg: var(--accent-hover);
+  --btn-fg: var(--on-accent);
+  --btn-bd: var(--accent-hover);
+  background-color: var(--accent-hover);
+}
+
+.btn .icon {
+  width: 1.05em;
+  height: 1.05em;
+}
+
+/* Chip / tag */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: 0.34rem 0.7rem;
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--muted);
+  background-color: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-full);
+}
+
+.chip--accent {
+  color: var(--accent);
+  background-color: var(--accent-soft);
+  border-color: color-mix(in srgb, var(--accent) 28%, transparent);
+}
+
+/* Real brand logos inside "Built on" chips. Colour marks sit on the chip ground in
+   both themes; icon marks pair with the name, wordmark marks (ITK, Elastix) stand alone. */
+.chip__logo {
+  height: 1.05em;
+  width: auto;
+  flex: none;
+}
+.chip__logo--word {
+  height: 1.3em;
+}
+
+/* GitHub star badge: a warm amber star that reads in both themes. */
+.chip--stars {
+  font-variant-numeric: tabular-nums;
+}
+.chip__star {
+  color: #e0a93b;
+}
+
+/* Card */
+.card {
+  padding: var(--sp-5);
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-1);
+  transition: transform var(--dur-2) var(--ease),
+    box-shadow var(--dur-2) var(--ease), border-color var(--dur-2) var(--ease);
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-2);
+  border-color: var(--border-strong);
+}
+
+/* Metric / stat — for the challenge-ranking highlights */
+.metric-strip {
+  display: grid;
+  gap: var(--sp-3);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr));
+}
+
+.metric {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: var(--sp-3) var(--sp-4);
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--r);
+  transition: transform var(--dur-2) var(--ease), box-shadow var(--dur-2) var(--ease),
+    border-color var(--dur-2) var(--ease);
+}
+
+.metric:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-1);
+  border-left-color: var(--accent);
+  border-color: var(--border-strong);
+}
+
+.metric__rank {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.32em;
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--accent-warm);
+}
+
+/* Podium medal (injected by main.js for places 1–3) inherits the rank colour. */
+.metric__medal {
+  width: 1.05em;
+  height: 1.05em;
+  flex: none;
+}
+
+.metric--gold .metric__rank {
+  color: var(--accent-warm);
+}
+.metric--silver .metric__rank {
+  color: #9aa1ab;
+}
+.metric--bronze .metric__rank {
+  color: #bd7b43;
+}
+/* Non-podium places (4th+) recede so the medals stand out. */
+.metric--plain .metric__rank {
+  color: var(--muted);
+}
+
+.metric__label {
+  font-size: var(--fs-xs);
+  color: var(--muted);
+  line-height: 1.3;
+}
+
+/* 6. ACCESSIBILITY ========================================================== */
+
+.skip-link {
+  position: absolute;
+  left: var(--sp-3);
+  top: -100%;
+  z-index: 100;
+  padding: 0.6rem 1rem;
+  background-color: var(--accent);
+  color: var(--on-accent);
+  border-radius: var(--r);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.skip-link:focus {
+  top: var(--sp-3);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--r-sm);
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* 7. SITE HEADER / NAVIGATION =============================================== */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background-color: var(--header-bg);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: saturate(160%) blur(10px);
+  -webkit-backdrop-filter: saturate(160%) blur(10px);
+}
+
+.nav-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  height: var(--header-h);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-3);
+  font-weight: 650;
+  color: var(--text);
+  text-decoration: none;
+  letter-spacing: -0.01em;
+}
+
+.brand__mark {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--on-accent);
+  background-color: var(--accent);
+  border-radius: 8px;
+}
+
+.brand__name {
+  font-size: var(--fs-sm);
+}
+
+.nav {
+  margin-inline-start: auto;
+}
+
+.nav__list {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-1);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav__link {
+  display: inline-block;
+  padding: 0.4rem 0.58rem;
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--muted);
+  text-decoration: none;
+  border-radius: var(--r-sm);
+  transition: color var(--dur-2) var(--ease),
+    background-color var(--dur-2) var(--ease);
+}
+
+.nav__link:hover {
+  color: var(--text);
+  background-color: var(--surface-2);
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+.icon-btn {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  color: var(--muted);
+  background-color: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  cursor: pointer;
+  transition: color var(--dur-2) var(--ease),
+    border-color var(--dur-2) var(--ease),
+    background-color var(--dur-2) var(--ease);
+}
+
+.icon-btn:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  background-color: var(--accent-soft);
+}
+
+.icon-btn .icon {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+/* Theme-toggle icon swap — driven purely by the effective colour scheme */
+.theme-toggle .icon-sun {
+  display: none;
+}
+.theme-toggle .icon-moon {
+  display: block;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .theme-toggle .icon-sun {
+    display: block;
+  }
+  :root:not([data-theme="light"]) .theme-toggle .icon-moon {
+    display: none;
+  }
+}
+:root[data-theme="dark"] .theme-toggle .icon-sun {
+  display: block;
+}
+:root[data-theme="dark"] .theme-toggle .icon-moon {
+  display: none;
+}
+
+.nav-toggle {
+  display: none; /* shown only on small screens */
+}
+
+.nav-toggle .icon-close {
+  display: none;
+}
+.site-header[data-nav-open] .nav-toggle .icon-close {
+  display: block;
+}
+.site-header[data-nav-open] .nav-toggle .icon-menu {
+  display: none;
+}
+
+/* --- Mobile navigation (collapse). Breakpoint raised so the (now longer) horizontal
+   nav only shows when it comfortably fits; below it, the hamburger takes over. --- */
+@media (max-width: 900px) {
+  .nav {
+    position: absolute;
+    inset-inline: 0;
+    top: 100%;
+    display: none;
+    padding: var(--sp-3) var(--container-pad) var(--sp-4);
+    background-color: var(--surface);
+    border-bottom: 1px solid var(--border);
+    box-shadow: var(--shadow-2);
+  }
+
+  .site-header[data-nav-open] .nav {
+    display: block;
+  }
+
+  .nav__list {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--sp-1);
+  }
+
+  .nav__link {
+    padding: 0.7rem 0.75rem;
+    font-size: var(--fs-base);
+  }
+
+  .nav-toggle {
+    display: grid;
+  }
+}
+
+/* 8. HERO =================================================================== */
+
+.hero {
+  position: relative;
+  padding-block: clamp(var(--sp-7), 6vw + 1rem, calc(var(--sp-9) + 1rem));
+  isolation: isolate;
+}
+
+/* Ambient depth: one soft, accent-tinted glow drifting from the upper area, so the
+   hero reads as lit rather than flat. Kept very low-alpha and theme-aware so it adds
+   craft without becoming decorative; sits behind content and ignores pointer events. */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: calc(-1 * var(--header-h)) 0 auto 0;
+  z-index: -1;
+  height: clamp(420px, 60vh, 720px);
+  background:
+    radial-gradient(70% 90% at 78% 0%,
+      color-mix(in srgb, var(--accent) 13%, transparent), transparent 60%),
+    radial-gradient(55% 70% at 12% 8%,
+      color-mix(in srgb, var(--accent) 7%, transparent), transparent 55%);
+  pointer-events: none;
+}
+
+.hero__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-4);
+  max-width: 46rem;
+}
+
+.hero__name {
+  font-size: var(--fs-3xl);
+  letter-spacing: -0.025em;
+}
+
+.hero__tagline {
+  font-size: var(--fs-lg);
+  font-weight: 600;
+  line-height: var(--lh-snug);
+  color: var(--text);
+  max-width: 36ch;
+}
+
+.hero__intro {
+  font-size: var(--fs-md);
+  color: var(--muted);
+  line-height: var(--lh);
+  max-width: 60ch;
+}
+
+.hero__intro strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.hero__chips {
+  gap: var(--sp-2);
+  margin-top: var(--sp-1);
+}
+
+.hero__metrics {
+  width: 100%;
+  margin-top: var(--sp-2);
+}
+
+.hero__links {
+  gap: var(--sp-3);
+  margin-top: var(--sp-2);
+}
+
+.hero__note {
+  font-size: var(--fs-xs);
+  color: var(--muted);
+}
+
+/* 9. SECTION PLACEHOLDERS + FOOTER ========================================= */
+
+.placeholder {
+  font-size: var(--fs-md);
+  color: var(--muted);
+  max-width: 62ch;
+}
+
+.placeholder__tag {
+  display: inline-block;
+  margin-top: var(--sp-3);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--accent);
+  opacity: 0.85;
+}
+
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding-block: var(--sp-6);
+  color: var(--muted);
+  font-size: var(--fs-sm);
+}
+
+.site-footer__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+}
+
+.site-footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-4);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.site-footer__links a {
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.site-footer__links a:hover {
+  color: var(--accent);
+}
+
+/* 9b. ABOUT & RESEARCH CONTENT (Phase 2) ==================================== */
+/* Built strictly on the Phase-1 tokens & primitives (card, chip, metric,
+   eyebrow, grid, section__head). No new colours or scales are introduced. */
+
+/* Vertical rhythm helper for prose-like blocks */
+.flow > * + * {
+  margin-top: var(--sp-4);
+}
+
+/* Generic small caption / attribution (generalises the hero note) */
+.note {
+  font-size: var(--fs-xs);
+  color: var(--muted);
+}
+
+/* Card heading + body text (h4-level title inside a .card) */
+.card__title {
+  font-size: var(--fs-md);
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  line-height: var(--lh-snug);
+}
+
+.card__text {
+  margin-top: var(--sp-3);
+  color: var(--muted);
+}
+
+/* --- About: prose + facts aside --- */
+.about__layout {
+  display: grid;
+  gap: var(--sp-6);
+  grid-template-columns: 1fr;
+  align-items: start;
+}
+
+@media (min-width: 760px) {
+  .about__layout {
+    grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+    gap: var(--sp-7);
+  }
+}
+
+.facts__list {
+  display: grid;
+  gap: var(--sp-4);
+}
+
+.facts__row {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.facts__row dt {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.facts__row dd {
+  margin: 0;
+  font-size: var(--fs-sm);
+  color: var(--text);
+}
+
+/* --- Affiliations: real institutional logos on neutral plates ---
+   Brand guidelines discourage recolouring, so each logo sits on a light plate that
+   stays identical in both themes — keeping the marks faithful and legible. */
+.affiliations {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--sp-5) var(--sp-7);
+  margin-top: var(--sp-6);
+  padding-top: var(--sp-5);
+  border-top: 1px solid var(--border);
+}
+
+.affiliations__group {
+  display: grid;
+  gap: var(--sp-3);
+}
+
+.affiliations__label {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.affiliations__list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-3);
+  margin: 0;
+  padding: 0;
+}
+
+.affiliations__item a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-3);
+  height: 58px;
+  min-width: 124px;
+  padding: var(--sp-2) var(--sp-4);
+  /* Light theme: transparent, brand-colour marks on the page. Dark theme: a soft, refined
+     plate (below) holds the same colour marks — no stark box, no flat silhouette. */
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--r-lg);
+  transition: transform var(--dur-2) var(--ease), box-shadow var(--dur-2) var(--ease),
+    border-color var(--dur-2) var(--ease);
+}
+
+.affiliations__item a:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-1);
+}
+
+.affiliations__logo {
+  width: auto;
+  height: 100%;
+  object-fit: contain;
+}
+
+.affiliations__name {
+  font-size: var(--fs-sm);
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  color: var(--text); /* light theme: dark ink on the page */
+}
+
+/* Dark theme: a soft, refined light plate (rounded, padded, gentle shadow) holds the
+   brand-colour marks — keeps the logos faithful and legible without a stark box or a flat
+   silhouette. The Fideus wordmark text reverts to dark ink on the plate. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .affiliations__item a {
+    background-color: #f4f1ea;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  }
+  :root:not([data-theme="light"]) .affiliations__name {
+    color: #1a1e27;
+  }
+}
+:root[data-theme="dark"] .affiliations__item a {
+  background-color: #f4f1ea;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+:root[data-theme="dark"] .affiliations__name {
+  color: #1a1e27;
+}
+
+/* --- Experience: a light teaching/mobility timeline --- */
+.timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--sp-5);
+}
+
+.timeline__item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  column-gap: var(--sp-4);
+  padding-left: var(--sp-4);
+  border-left: 2px solid color-mix(in srgb, var(--accent) 35%, var(--border));
+}
+
+/* Institution logo: a fixed box (so the text column starts at the same x for every
+   row), transparent in light theme; a soft plate in dark theme keeps dark wordmarks
+   such as ESIR legible. Mirrors the .affiliations__item treatment. */
+.timeline__logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 112px;
+  height: 56px;
+  flex: none;
+  padding: var(--sp-1) var(--sp-2);
+  border-radius: var(--r);
+  background-color: transparent;
+  transition: transform var(--dur-2) var(--ease), box-shadow var(--dur-2) var(--ease);
+}
+.timeline__logo:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-1);
+}
+.timeline__logo-img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  object-fit: contain;
+}
+
+.timeline__body {
+  display: grid;
+  gap: var(--sp-1);
+  min-width: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .timeline__logo {
+    background-color: #f4f1ea;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  }
+}
+:root[data-theme="dark"] .timeline__logo {
+  background-color: #f4f1ea;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.timeline__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--sp-1) var(--sp-3);
+}
+
+.timeline__role {
+  margin: 0;
+  font-size: var(--fs-md);
+  font-weight: 650;
+}
+
+.timeline__dates {
+  font-size: var(--fs-sm);
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.timeline__org {
+  margin: 0;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.timeline__desc {
+  margin: 0;
+  color: var(--muted);
+  max-width: 60ch;
+}
+
+/* --- Research: thesis title --- */
+.thesis-title {
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  line-height: var(--lh-snug);
+  letter-spacing: -0.01em;
+  color: var(--text);
+  max-width: 48ch;
+}
+
+.thesis-title em {
+  font-style: italic;
+}
+
+.thesis-title__sub {
+  display: block;
+  margin-top: var(--sp-1);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  font-style: normal;
+  color: var(--muted);
+}
+
+/* Stand-in IMPACT mark beside the opening "one idea" beat. The two real method
+   marks sit inline at a small, quiet size until Phase 03 swaps in the master
+   logo; the <p> is aria-hidden and the imgs carry empty alt, so they stay
+   decorative. flex-wrap keeps them from overflowing down to 320px. */
+/* The opening IMPACT mark sits on the same neutral plate as the ecosystem product
+   logos (the .eco-card__logo treatment): a min-height plate that grows rather than
+   clips, with the wordmark capped by an explicit px max-height. Never max-height:100%
+   — inside a flex plate that clips the IMPACT wordmark (the repo's known logo
+   footgun). Two real method marks (Reg + Synth) read as one lockup. */
+.research__marks {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-4) var(--sp-6);
+  min-height: 96px;
+  margin: 0;
+  padding: var(--sp-4) var(--sp-5);
+  background-color: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+}
+
+.research__marks img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 72px;
+}
+
+/* --- Contributions (numbered cards) --- */
+.contributions {
+  list-style: none;
+  display: grid;
+  gap: var(--sp-4);
+  margin: 0;
+  padding: 0;
+}
+
+.contribution {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--sp-4);
+  align-items: start;
+}
+
+.contribution__num {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  font-size: var(--fs-md);
+  font-weight: 700;
+  color: var(--accent);
+  background-color: var(--accent-soft);
+  border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
+  border-radius: var(--r-full);
+}
+
+.contribution__tags {
+  margin-top: var(--sp-4);
+  gap: var(--sp-2);
+}
+
+/* --- Callouts: central-idea pull-quote + transversal note --- */
+.callout {
+  margin: 0;
+  padding: var(--sp-5) var(--sp-6);
+  background-color: var(--accent-soft);
+  border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--r-lg);
+}
+
+.callout .eyebrow {
+  margin-bottom: var(--sp-2);
+}
+
+.callout__text {
+  font-size: var(--fs-md);
+  line-height: var(--lh-snug);
+  color: var(--text);
+  max-width: 72ch;
+}
+
+.callout--note {
+  background-color: var(--surface);
+  border-color: var(--border);
+  border-left-color: var(--border-strong);
+  box-shadow: var(--shadow-1);
+}
+
+.callout--note .callout__text {
+  font-size: var(--fs-base);
+  line-height: var(--lh);
+}
+
+.callout--note .callout__text strong {
+  font-weight: 650;
+}
+
+/* --- Results: full rankings + headline stats --- */
+.results__rankings {
+  margin-bottom: var(--sp-3);
+}
+
+.stat-row {
+  display: grid;
+  gap: var(--sp-3);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  margin-top: var(--sp-5);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: var(--sp-4) var(--sp-5);
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-1);
+  transition: transform var(--dur-2) var(--ease), box-shadow var(--dur-2) var(--ease),
+    border-color var(--dur-2) var(--ease);
+}
+
+.stat:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-2);
+  border-color: var(--border-strong);
+}
+
+.stat__value {
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.stat__label {
+  font-size: var(--fs-sm);
+  color: var(--muted);
+  line-height: 1.35;
+}
+
+/* --- Research block rhythm (spacing between major sub-sections) --- */
+#research > .container > .reveal + .reveal {
+  margin-top: var(--sp-7);
+}
+
+#research > .container > .callout + .callout {
+  margin-top: var(--sp-4);
+}
+
+/* --- Registration-bias highlight ----------------------------------------- */
+/* A heavier, in-system highlight placed before the Results to reframe how the
+   rankings read. It pairs the .card surface (var(--surface), var(--border),
+   var(--r-lg)) with a .callout-style left accent rail, and lifts to var(--shadow-2)
+   so it reads as a notch more prominent than a plain card. Tokens only — no new
+   colours or scales — so it tracks both themes automatically. The accent rail
+   overrides only the left edge of the 1px border, exactly as .callout does. */
+.bias {
+  padding: var(--sp-6);
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-2);
+}
+
+/* Kicker spacing matches the callout's eyebrow rhythm. */
+.bias__kicker {
+  margin-bottom: var(--sp-2);
+}
+
+/* Inherits the h3 scale (--fs-lg); only the rhythm to the body is set here. */
+.bias__title {
+  margin-bottom: var(--sp-4);
+  color: var(--text);
+}
+
+/* Comfortable measure, same ceiling as .callout__text so lines stay readable
+   at any width and the block still reflows cleanly down to 320px. */
+.bias__body {
+  max-width: 72ch;
+  color: var(--text);
+}
+
+/* 9c. IMPACT ECOSYSTEM (Phase 3) =========================================== */
+/* Signature section: the through-line intro, a custom theme-aware flow diagram,
+   per-layer cards, and a tech-stack strip — all built on the Phase-1 tokens.
+   No new colours or scales; everything resolves through CSS variables so it
+   stays legible in both light and dark, and reflows cleanly to a phone. */
+
+/* --- Intro: what IMPACT is + the single through-line --- */
+.impact__intro {
+  max-width: 72ch;
+}
+
+.impact__intro strong {
+  color: var(--text);
+  font-weight: 650;
+}
+
+
+/* --- Real repo logo on the three product cards. The plate uses min-height (so it
+   grows rather than clips) and the logo is capped with an explicit px max-height —
+   avoiding the flex/grid `max-height: 100%` image quirk that cropped the wordmark.
+   The complete mark is always shown, and the three cards read as one set. --- */
+.eco-card__logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 96px;
+  padding: var(--sp-3) var(--sp-4);
+  background-color: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+}
+
+.eco-card__logo img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 72px;
+}
+
+/* --- KonfAI: featured framework block --- */
+.konfai {
+  display: grid;
+  gap: var(--sp-5);
+  margin-top: var(--sp-6);
+  border-left: 4px solid var(--accent);
+}
+
+.konfai__intro {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-5);
+  flex-wrap: wrap;
+}
+
+.konfai__logo {
+  flex: none;
+}
+.konfai__logo img {
+  width: clamp(150px, 30vw, 210px);
+  height: auto;
+  display: block;
+  border-radius: var(--r);
+}
+
+.konfai__lead {
+  flex: 1 1 320px;
+}
+
+.konfai__title {
+  margin: 0;
+  font-size: var(--fs-lg);
+}
+
+.konfai__cols {
+  display: grid;
+  gap: var(--sp-4) var(--sp-5);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+}
+
+.konfai__pillar-title {
+  margin: 0 0 var(--sp-1);
+  font-size: var(--fs-md);
+}
+.konfai__pillar p {
+  margin: 0;
+  color: var(--muted);
+}
+
+/* --- Per-layer explanation cards --- */
+.eco-cards {
+  margin-top: var(--sp-7);
+}
+
+.eco-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+/* Spotlight: only the two IMPACT methods, shown larger (two columns, taller logo
+   plate). With just two items the auto-fit grid already places them side by side;
+   the larger min track and logo plate make them read as feature cards. */
+.eco-cards--spotlight {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+}
+.eco-cards--spotlight .eco-card__logo {
+  min-height: 128px;
+}
+.eco-cards--spotlight .eco-card__logo img {
+  max-height: 92px;
+}
+
+/* Compact "Also ships" line for the supporting artifacts (mirrors the eco-stack row). */
+.eco-also {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-2) var(--sp-3);
+  margin-top: var(--sp-5);
+  font-size: var(--fs-sm);
+}
+.eco-also__label {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.eco-also__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-weight: 550;
+  color: var(--accent);
+  text-decoration: none;
+}
+.eco-also__link:hover {
+  text-decoration: underline;
+}
+.eco-also__link .icon {
+  width: 1.05em;
+  height: 1.05em;
+}
+.eco-also__sep {
+  color: var(--border-strong);
+}
+
+.eco-card__head {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+}
+
+.eco-card__icon {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  flex: none;
+  color: var(--accent);
+  background-color: var(--accent-soft);
+  border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
+  border-radius: var(--r);
+}
+
+.eco-card__icon .icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.eco-card__label {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.eco-card__title {
+  font-size: var(--fs-md);
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  line-height: var(--lh-snug);
+  color: var(--text);
+}
+
+.eco-card__text {
+  flex: 1;
+  font-size: var(--fs-sm);
+  color: var(--muted);
+}
+
+.eco-card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  align-self: flex-start;
+  font-size: var(--fs-sm);
+  font-weight: 550;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.eco-card__link:hover {
+  text-decoration: underline;
+}
+
+.eco-card__link .icon {
+  width: 1.05em;
+  height: 1.05em;
+}
+
+/* Real, full-colour brand logo inside a link (e.g. the Hugging Face mark on
+   Hugging Face artifacts). Kept to the link's text size, aspect ratio preserved. */
+.link-logo {
+  height: 1.2em;
+  width: auto;
+  flex: none;
+}
+
+/* --- "Built on" tech-stack strip --- */
+.eco-stack {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-3) var(--sp-4);
+  margin-top: var(--sp-6);
+}
+
+.eco-stack__label {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Brand chips in the stack carry their (real) mark in the accent colour */
+.eco-stack .chip .icon {
+  color: var(--accent);
+  fill: var(--accent);
+}
+
+/* --- 3D Slicer showcase: real application screenshots as framed figure-cards --- */
+.slicer {
+  margin-top: var(--sp-7);
+}
+
+.slicer__grid {
+  display: grid;
+  gap: var(--sp-4);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  margin: 0;
+  padding: 0;
+}
+
+.slicer__exts-intro {
+  margin: var(--sp-6) 0 var(--sp-3);
+}
+
+.slicer__item {
+  padding: var(--sp-2);
+  overflow: hidden;
+}
+
+.slicer__fig {
+  display: grid;
+  gap: var(--sp-3);
+  margin: 0;
+}
+
+/* The capture already carries application chrome; a thin frame + dark mat keeps the
+   two different-sized screenshots looking like one consistent set. */
+.slicer__fig img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1000 / 540;
+  object-fit: cover;
+  object-position: top center;
+  background-color: #0b0e13;
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+}
+
+.slicer__cap {
+  padding: 0 var(--sp-2) var(--sp-1);
+  font-size: var(--fs-sm);
+  color: var(--muted);
+  line-height: var(--lh-snug);
+}
+
+.slicer__cap strong {
+  color: var(--text);
+  font-weight: 650;
+}
+
+/* --- Upstream contribution: one focused, accent-railed statement (Projects) --- */
+.upstream {
+  display: grid;
+  gap: var(--sp-3);
+  margin-top: var(--sp-7);
+  padding: var(--sp-5) var(--sp-6);
+  background:
+    linear-gradient(var(--surface), var(--surface)) padding-box,
+    linear-gradient(120deg,
+      color-mix(in srgb, var(--accent) 40%, transparent),
+      var(--border)) border-box;
+  border: 1px solid transparent;
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-1);
+}
+
+.upstream__label {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.upstream__text {
+  font-size: var(--fs-md);
+  line-height: var(--lh-snug);
+  color: var(--text);
+  max-width: 70ch;
+}
+
+.upstream__text strong {
+  font-weight: 650;
+}
+
+.upstream__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  align-self: start;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  font-family: var(--font-mono);
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.upstream__link:hover {
+  text-decoration: underline;
+}
+
+.upstream__link .icon {
+  width: 1.05em;
+  height: 1.05em;
+}
+
+/* 9d. PUBLICATIONS (Phase 4) ============================================= */
+/* Data-driven list built on the Phase-1 card, chip and link primitives. */
+
+/* --- Publications list (grouped by type) --- */
+.publications {
+  display: grid;
+  gap: var(--sp-6);
+}
+
+.publications__group {
+  display: grid;
+  gap: var(--sp-4);
+}
+
+.publications__group-title {
+  font-size: var(--fs-lg);
+}
+
+.publications__list {
+  display: grid;
+  gap: var(--sp-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.publication {
+  display: grid;
+  gap: var(--sp-2);
+  padding: var(--sp-4) var(--sp-5);
+  border-radius: var(--r);
+  box-shadow: none;
+  overflow-wrap: anywhere;
+}
+
+.publication:hover {
+  transform: none;
+  border-color: var(--border-strong);
+  box-shadow: none;
+}
+
+.publication__title {
+  font-size: var(--fs-base);
+  font-weight: 650;
+  line-height: var(--lh-snug);
+  color: var(--text);
+}
+
+.publication__authors {
+  margin: 0;
+  font-size: var(--fs-sm);
+  color: var(--muted);
+}
+
+.publication__authors strong {
+  color: var(--text);
+  font-weight: 650;
+}
+
+.publication__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-1);
+  margin: 0;
+  font-size: var(--fs-sm);
+  color: var(--muted);
+}
+
+.publication__venue {
+  font-style: italic;
+}
+
+.publication__status {
+  margin-inline-start: var(--sp-1);
+  padding: 0.1rem 0.5rem;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+}
+
+.publication__link {
+  margin-top: var(--sp-1);
+}
+
+.publication__link .icon {
+  width: 0.85em;
+  height: 0.85em;
+}
+
+.publications__more {
+  margin-top: var(--sp-5);
+}
+
+/* --- Contact --- */
+.contact {
+  max-width: 60ch;
+}
+
+.contact__intro {
+  color: var(--muted);
+}
+
+.contact__links {
+  margin-top: var(--sp-5);
+  gap: var(--sp-3);
+}
+
+/* --- Footer org emphasis (kept minimal) --- */
+.site-footer__org {
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* 9e. CONTRIBUTION DEEP-DIVES (Phase 5) =================================== */
+/* A no-JS disclosure that keeps each contribution card short by default and
+   expands a structured "deep dive" on click. Built strictly on the Phase-1
+   tokens & primitives — no new colours or scales. The native <details>/<summary>
+   gives keyboard + screen-reader support for free; only a custom chevron and an
+   optional, reduced-motion-gated height reveal are layered on top. */
+
+/* Separated from the card text above by a quiet rule. */
+.deepdive {
+  margin-top: var(--sp-5);
+  padding-top: var(--sp-4);
+  border-top: 1px solid var(--border);
+}
+
+/* The affordance: a quiet accent link. The native marker is removed (inline-flex
+   display + list-style:none + the -webkit pseudo) and replaced by a custom chevron. */
+.deepdive > summary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-size: var(--fs-sm);
+  font-weight: 550;
+  color: var(--accent);
+  cursor: pointer;
+  list-style: none;
+}
+
+.deepdive > summary::-webkit-details-marker {
+  display: none;
+}
+
+.deepdive > summary:hover {
+  color: var(--accent-hover);
+}
+
+/* Custom chevron — a rotated CSS square showing two borders. Points right when
+   closed, down when open; the rotation respects reduced motion via the global
+   block in section 11. */
+.deepdive > summary::before {
+  content: "";
+  flex: none;
+  width: 0.42rem;
+  height: 0.42rem;
+  border-top: 2px solid currentColor;
+  border-right: 2px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform var(--dur-2) var(--ease);
+}
+
+.deepdive[open] > summary::before {
+  transform: rotate(135deg);
+}
+
+/* Expanded content — spacing between parts comes from the shared .flow utility
+   (the markup carries `class="deepdive__body flow"`); only the offset from the
+   summary is set here. */
+.deepdive__body {
+  margin-top: var(--sp-5);
+}
+
+.deepdive__part {
+  display: grid;
+  gap: var(--sp-1);
+}
+
+/* Small-caps label, mirroring .eco-card__label / .facts__row dt. */
+.deepdive__label {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.deepdive__part p {
+  margin: 0;
+  font-size: var(--fs-sm);
+  color: var(--muted);
+  line-height: var(--lh);
+}
+
+.deepdive__part strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* Framed figure — the same look as .slicer__fig (thin frame, dark mat, fixed
+   aspect-ratio, cover-fit) so the screenshot reads as part of the same set. */
+.deepdive__figure {
+  display: grid;
+  gap: var(--sp-3);
+  margin: 0;
+}
+
+.deepdive__figure img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1000 / 540;
+  object-fit: cover;
+  object-position: top center;
+  background-color: #0b0e13;
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+}
+
+/* A full informational diagram (e.g. the duality's shared-feature-space schematic),
+   as opposed to the cover-fit screenshots inside the method cards. Shown complete at
+   its own aspect ratio so the edge labels are never cropped. The enclosing
+   .deepdive__body already spaces it from the summary, so no extra margin here. */
+.deepdive__figure--full img {
+  aspect-ratio: auto;
+  object-fit: contain;
+  /* Informational diagrams are dark-on-light. In light theme a transparent
+     ground lets them blend onto the near-white card; in dark theme they need a
+     light plate (below) so their baked-in labels stay legible. */
+  background-color: transparent;
+}
+
+/* Dark theme: sit the diagrams on a light plate so dark labels remain readable.
+   Opaque diagrams (own ground baked in) are unaffected — the plate stays hidden. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .deepdive__figure--full img {
+    background-color: var(--c-surface-light);
+  }
+}
+:root[data-theme="dark"] .deepdive__figure--full img {
+  background-color: var(--c-surface-light);
+}
+
+/* A capped, centred diagram so a near-square figure (the wPCA "need" pipeline)
+   does not dominate the disclosure at full card width. */
+.deepdive__figure--cap img {
+  max-width: 500px;
+  margin-inline: auto;
+}
+
+.deepdive__cap {
+  font-size: var(--fs-sm);
+  color: var(--muted);
+  line-height: var(--lh-snug);
+}
+
+.deepdive__cap strong {
+  color: var(--text);
+  font-weight: 650;
+}
+
+/* Progressive enhancement: smoothly reveal the panel where the platform supports
+   it AND the visitor welcomes motion. The disclosure and the required chevron
+   rotation work fully without this; unsupported browsers simply snap open.
+   interpolate-size (inherited) lets block-size animate to/from `auto`; it is
+   scoped here so the rest of the cascade is untouched. Never runs under
+   prefers-reduced-motion: reduce because the rule lives inside no-preference. */
+@media (prefers-reduced-motion: no-preference) {
+  .deepdive {
+    interpolate-size: allow-keywords;
+  }
+
+  .deepdive::details-content {
+    block-size: 0;
+    overflow: clip;
+    transition: block-size var(--dur-3) var(--ease),
+      content-visibility var(--dur-3) var(--ease) allow-discrete;
+  }
+
+  .deepdive[open]::details-content {
+    block-size: auto;
+  }
+}
+
+/* 10. REVEAL-ON-SCROLL ====================================================== */
+/* Hidden state applies only when JS is active (`.js` is set by the inline head
+   script), so visitors without JS always see fully-rendered content. */
+
+.js .reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity var(--dur-3) var(--ease), transform var(--dur-3) var(--ease);
+  will-change: opacity, transform;
+}
+
+.js .reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* 11. REDUCED MOTION ======================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .js .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

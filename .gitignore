@@ -1,0 +1,14 @@
+# Private source material (never publish)
+Thesis.pdf
+TotalSynth.pdf
+Registration_bias_sCT-1.pdf
+Soutenance_These_Valentin_Boussot.pptx
+
+# Local working notes and tooling state (not part of the website)
+.maestro/
+.impeccable/
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.swp

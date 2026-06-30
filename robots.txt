@@ -1,0 +1,6 @@
+# Valentin Boussot — vboussot.github.io
+# Public researcher portfolio. Crawling is welcome.
+User-agent: *
+Allow: /
+
+Sitemap: https://vboussot.github.io/sitemap.xml
